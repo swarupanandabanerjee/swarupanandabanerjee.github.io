@@ -8,7 +8,7 @@
 const SITE = {
   name: "Swarupananda Banerjee",
   shortName: "Swarup Banerjee",           // shown at the top-left of the menu bar
-  photo: "assets/img/profile.jpg",        // replace this file to change your photo (keep the same name)
+  photo: "profile.jpg",        // replace this file to change your photo (keep the same name)
   position: [                             // each line appears on its own line under your name
     "PhD Research Scholar",
     "Department of Mathematics",
@@ -17,7 +17,7 @@ const SITE = {
   affiliationUrl: "https://www.iitkgp.ac.in/department/MA",
   location: "Kharagpur, India",
   email: "sbanerjee.24@kgpian.iitkgp.ac.in",
-  cvFile: "files/Swarupananda_Banerjee_CV.pdf",
+  cvFile: "Swarupananda_Banerjee_CV.pdf",
   lastUpdated: "November 2026",           // ✏️ change this when you update the site
 
   // Profile links shown as icons in the sidebar.
