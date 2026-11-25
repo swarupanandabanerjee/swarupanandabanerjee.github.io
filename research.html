@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!-- ================================================================
+     PAGE SETTINGS. Usually you only need to change <title> and
+     the "description" text below. Everything else can stay as it is.
+     ================================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research | Swarupananda Banerjee</title>
+<meta name="description" content="Research of Swarupananda Banerjee: homogenization theory, well-posedness of PDE models, biphasic mixture and visco-morphoelastic models for biological and tissue-engineering systems.">
+<meta name="author" content="Swarupananda Banerjee">
+<link rel="canonical" href="https://swarupanandabanerjee.github.io/research.html">
+
+<!-- Social media preview (LinkedIn, WhatsApp, X, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Swarupananda Banerjee">
+<meta property="og:title" content="Research | Swarupananda Banerjee">
+<meta property="og:description" content="Research of Swarupananda Banerjee: homogenization theory, well-posedness of PDE models, biphasic mixture and visco-morphoelastic models for biological and tissue-engineering systems.">
+<meta property="og:url" content="https://swarupanandabanerjee.github.io/research.html">
+<meta property="og:image" content="https://swarupanandabanerjee.github.io/assets/img/profile-full.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1d4f91">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- Light/dark mode: apply saved choice before the page draws (prevents a flash) -->
+<script>(function(){var t;try{t=localStorage.getItem('theme');}catch(e){}if(!t){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<!-- Fonts and styles -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<!-- MathJax: write LaTeX with $...$ (inline) or $$...$$ (display) anywhere on the page -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Top menu bar: built automatically from assets/js/site.js -->
+<header id="site-header">
+  <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
+</header>
+
+<div class="layout">
+  <!-- Left sidebar (photo, name, links): built automatically from assets/js/site.js -->
+  <aside id="site-sidebar" aria-label="Profile"></aside>
+
+  <main id="main" class="main">
+
+    <div class="page-header">
+      <h1>Research</h1>
+      <p class="lead">Mathematical modeling and applied analysis of PDE models for complex biological and porous media.</p>
+    </div>
+
+    <!-- ✏️ Edit any text on this page freely. LaTeX math works: $...$ inline, $$...$$ displayed. -->
+    <section class="card">
+      <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Overview</h2>
+      <p>My research lies at the interface of applied analysis and mathematical modeling. I study partial differential equation models of complex biological and porous media, with two main goals: establishing their <strong>well-posedness</strong>, and rigorously deriving effective macroscopic descriptions through <strong>homogenization</strong> and asymptotic limits.</p>
+      <p>A particular focus is on <strong>biphasic mixture</strong> and <strong>visco-morphoelastic</strong> models, which describe the mechanics of growing and remodelling biological tissues and tissue-engineering constructs.</p>
+    </section>
+
+    <!-- ✏️ RESEARCH THEMES: each <section class="card"> … </section> is one box.
+         Copy a whole box to add a theme; delete one to remove it. -->
+    <div class="grid-2">
+      <section class="card">
+        <h3>Homogenization &amp; multiscale analysis</h3>
+        <p>Biological tissues and porous materials have a fine microstructure. Homogenization theory provides rigorous tools for passing from microscopic models to effective macroscopic equations as the scale parameter $\varepsilon \to 0$, for instance through two-scale expansions</p>
+        <div class="math-block">$$u_\varepsilon(x) \approx u_0\!\left(x,\tfrac{x}{\varepsilon}\right) + \varepsilon\, u_1\!\left(x,\tfrac{x}{\varepsilon}\right) + \cdots$$</div>
+      </section>
+      <section class="card">
+        <h3>Biphasic mixture models</h3>
+        <p>Soft tissues and scaffolds are often modelled as mixtures of a deformable solid matrix and an interstitial fluid. I study the well-posedness and homogenization of such biphasic mixture models arising in biological and tissue-engineering systems.</p>
+      </section>
+      <section class="card">
+        <h3>Visco-morphoelastic systems</h3>
+        <p>Morphoelasticity describes materials that grow and remodel. My current work analyses an incompressible visco-morphoelastic system: its weak solutions and its vanishing-diffusion limit, in which objective stress rates such as the Jaumann derivative play a central role,</p>
+        <div class="math-block">$$\overset{\circ}{\boldsymbol{\sigma}} = \dot{\boldsymbol{\sigma}} + \boldsymbol{\sigma}\mathbf{W} - \mathbf{W}\boldsymbol{\sigma}.$$</div>
+      </section>
+      <section class="card">
+        <h3>Analysis of nonlinear PDEs</h3>
+        <p>Existence of weak solutions, compactness arguments and singular limits for nonlinear PDE systems, together with variational methods for non-local problems that lack compactness.</p>
+      </section>
+    </div>
+
+    <section class="card">
+      <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2h12.4a1.5 1.5 0 0 0 1.3-2L14 9V3"/><path d="M7 15h10"/></svg>Research projects</h2>
+      <ul class="entries">
+        <!-- ✏️ TO ADD AN ITEM: copy one whole block from <li class="entry"> to </li>,
+             paste it where you want it (newest at the top), and edit the text.
+             Remove the <p class="entry-sub"> or <ul> lines if you don't need them. -->
+        <li class="entry">
+          <div class="entry-head"><p class="entry-title">Doctoral research &mdash; IIT Kharagpur</p><span class="entry-date">Jul 2024 &ndash; Present</span></div>
+          <p class="entry-sub">Supervisors: <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-hsmahato" target="_blank" rel="noopener">Prof. Hari Shankar Mahato</a> and <a href="https://www.iitkgp.ac.in/department/MA/faculty/ma-rajas" target="_blank" rel="noopener">Prof. G. P. Raja Sekhar</a></p>
+          <ul>
+            <li>Well-posedness and homogenization of PDE models for biological and porous media.</li>
+          </ul>
+        </li>
+        <li class="entry">
+          <div class="entry-head"><p class="entry-title">Junior Research Fellow &mdash; IIT Ropar</p><span class="entry-date">Feb 2024 &ndash; Jul 2024</span></div>
+          <p class="entry-sub">Supervisor: <a href="https://math.iitm.ac.in/innerfaculty.php?fname=Bidhan%20Chandra%20Sardar" target="_blank" rel="noopener">Prof. Bidhan Chandra Sardar</a></p>
+          <ul>
+            <li>Project: <em>Multi-Scale Analysis and Computation of Optimal Control Problems</em>.</li>
+          </ul>
+        </li>
+        <li class="entry">
+          <div class="entry-head"><p class="entry-title">Junior Research Fellow &mdash; IIT Bhilai</p><span class="entry-date">Jul 2023 &ndash; Dec 2023</span></div>
+          <p class="entry-sub">Supervisor: <a href="https://www.iitbhilai.ac.in/index.php?pid=pawan" target="_blank" rel="noopener">Prof. Pawan Kumar Mishra</a></p>
+          <ul>
+            <li>Project: <em>Variational Method for Non Local Problems with Lack of Compactness</em>.</li>
+          </ul>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6v18h12V7l-4-4Z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>Publications</h2>
+      <p>For papers and preprints, see the <a href="publications.html">Publications</a> page or my <a href="https://scholar.google.com/citations?user=_a5852EAAAAJ&amp;hl=en&amp;oi=ao" target="_blank" rel="noopener">Google Scholar</a> profile.</p>
+    </section>
+
+  </main>
+</div>
+
+<!-- Footer: built automatically from assets/js/site.js -->
+<footer id="site-footer"></footer>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
