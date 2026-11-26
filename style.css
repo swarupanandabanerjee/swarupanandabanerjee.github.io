@@ -621,11 +621,11 @@ pre.bibtex {
   .sidebar.compact .sidebar-meta, .sidebar.compact .profile-links, .sidebar.compact .cv-btn, .sidebar.compact .sidebar-advisors { display: none; }
 }
 /* medium screens: tighter menu so all items fit on one line */
-@media (min-width: 941px) and (max-width: 1100px) {
+@media (min-width: 1041px) and (max-width: 1240px) {
   .topbar-inner { gap: 10px; }
   .nav-links a { padding: 7px 8px; font-size: .9rem; }
 }
-@media (max-width: 940px) {
+@media (max-width: 1040px) {
   .menu-toggle { display: inline-flex; margin-left: auto; }
   .topbar nav { display: contents; }
   .nav-links {

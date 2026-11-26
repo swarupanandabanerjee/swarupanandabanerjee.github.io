@@ -38,6 +38,7 @@ Inside the files, every place you are expected to edit is marked with **✏️**
 | **Add a talk** | `talks.html` | Find `TALKS YOU GIVE`. The first time, delete the lines `START-HIDDEN` and `END-HIDDEN` and replace the example talk with your talk. After that, copy the `<li class="entry">…</li>` block for each new talk. |
 | **Add a workshop/conference** | `talks.html` | Copy one `<li class="entry">…</li>` block in the "attended" list and edit it. |
 | **Add a teaching role** | `teaching.html` | Copy one `<li class="entry">…</li>` block and edit it. |
+| **Add a job / research position** | `experience.html` | Find `RESEARCH EXPERIENCE` or `PROFESSIONAL EXPERIENCE`. Copy one `<li class="entry edu">…</li>` block, paste it at the top of that list, and edit it. |
 | **Change bio / research text** | `index.html`, `research.html` | Edit the sentences directly. |
 | **Change position, profile links, menu, or "Last updated"** | `assets/js/site.js` | Edit only the `SITE = { … }` block at the top. Every page updates automatically. |
 | **Replace the CV PDF** | `files/` folder | Rename your new PDF to exactly `Swarupananda_Banerjee_CV.pdf`, then open the `files` folder → **Add file → Upload files** → drop it in → **Commit changes**. The old file is replaced. |
@@ -84,6 +85,7 @@ research.html       Research themes and projects
 publications.html   Papers, preprints, theses
 talks.html          Talks, workshops and conferences
 teaching.html       Teaching assistantships and education work
+experience.html     Research experience (JRF positions) and professional roles
 cv.html             CV summary + PDF download
 contact.html        Email, address, profiles
 404.html            "Page not found" page
