@@ -47,6 +47,8 @@ const SITE = {
     { label: "About",        file: "index.html" },
     { label: "Research",     file: "research.html" },
     { label: "Publications", file: "publications.html" },
+    { label: "Education",    file: "education.html" },
+    { label: "Achievements", file: "achievements.html" },
     { label: "Talks",        file: "talks.html" },
     { label: "Teaching",     file: "teaching.html" },
     { label: "CV",           file: "cv.html" },

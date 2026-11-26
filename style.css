@@ -308,6 +308,51 @@ pre.bibtex {
 .topic-eq .eq-note { margin: 4px 0 2px; font-size: .88rem; color: var(--muted); }
 .topic .tags { margin-top: 4px; }
 .nowrap { white-space: nowrap; }
+
+/* ---------- Education page ---------- */
+.entry.edu { padding-bottom: 26px; }
+.entry.edu:last-child { padding-bottom: 0; }
+/* pulsing "current" milestone dot */
+.entry.is-live::before { background: #22a559; border-color: #22a559; }
+.entry.is-live::after {
+  content: ""; position: absolute; left: -6px; top: 7px; width: 10px; height: 10px; border-radius: 50%;
+  background: #22a559; opacity: .2; transform: scale(2.3); pointer-events: none;
+  animation: live-halo 2.4s ease-in-out infinite;
+}
+@keyframes live-halo { 0%, 100% { transform: scale(1.9); opacity: .26; } 50% { transform: scale(2.6); opacity: .14; } }
+[data-theme="dark"] .entry.is-live::before, [data-theme="dark"] .entry.is-live::after { background: #4cc77a; border-color: #4cc77a; }
+@media (prefers-reduced-motion: reduce) { .entry.is-live::after { animation: none; } }
+.edu-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 8px 0 0; font-size: .88rem; color: var(--muted); }
+.edu-place { display: inline-flex; align-items: center; gap: 5px; }
+.edu-place svg { width: 15px; height: 15px; }
+.pill {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 11px; border-radius: 999px;
+  font-size: .84rem; font-weight: 500; background: var(--accent-soft); color: var(--accent);
+}
+.pill strong { font-weight: 700; }
+.pill-live { background: #e6f4ea; color: #1e7b3a; }
+[data-theme="dark"] .pill-live { background: #16301f; color: #7fd39a; }
+.edu-line { margin: 8px 0 0; font-size: .94rem; }
+.edu-project {
+  margin: 12px 0 0; padding: 12px 16px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.ep-label {
+  display: flex; align-items: center; gap: 7px; margin: 0 0 4px;
+  font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted);
+}
+.ep-label svg { width: 15px; height: 15px; color: var(--accent); }
+.ep-title { margin: 0; font-weight: 500; font-style: italic; line-height: 1.45; }
+.ep-sub { margin: 4px 0 0; font-size: .88rem; color: var(--muted); }
+
+/* ---------- Achievements page ---------- */
+.soft-rank {
+  display: inline-block; margin-left: 6px; padding: 0 7px; border-radius: 999px; vertical-align: 1px;
+  font-size: .74rem; font-weight: 500; line-height: 1.6; color: var(--muted);
+  border: 1px solid var(--border); background: var(--surface-2); white-space: nowrap;
+}
+.stage-tags { margin-top: 8px; }
+.stage-tags .tag { font-size: .8rem; padding: 3px 10px; }
 .note { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: .93rem; }
 
 .footer { border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; }
@@ -575,7 +620,12 @@ pre.bibtex {
   .sidebar.compact .position { font-size: .85rem; }
   .sidebar.compact .sidebar-meta, .sidebar.compact .profile-links, .sidebar.compact .cv-btn, .sidebar.compact .sidebar-advisors { display: none; }
 }
-@media (max-width: 860px) {
+/* medium screens: tighter menu so all items fit on one line */
+@media (min-width: 941px) and (max-width: 1100px) {
+  .topbar-inner { gap: 10px; }
+  .nav-links a { padding: 7px 8px; font-size: .9rem; }
+}
+@media (max-width: 940px) {
   .menu-toggle { display: inline-flex; margin-left: auto; }
   .topbar nav { display: contents; }
   .nav-links {
@@ -591,7 +641,7 @@ pre.bibtex {
   .topic-eq .eq-row { column-gap: 1.2em; }
   .topic-eq mjx-container[display="true"] { font-size: 92% !important; margin: .6em 0 !important; }
   .card { padding: 20px 18px; }
-  .grid-2, .contact-grid { grid-template-columns: 1fr; }
+  .grid-2, .contact-grid, .exam-grid { grid-template-columns: 1fr; }
   .sidebar:not(.compact) { grid-template-columns: 1fr; text-align: center; justify-items: center; }
   .sidebar:not(.compact) .avatar { grid-row: auto; width: 120px; height: 120px; }
   .sidebar-meta { justify-content: center; text-align: left; }
