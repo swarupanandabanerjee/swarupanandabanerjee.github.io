@@ -1,0 +1,86 @@
+/* =====================================================================
+   Quotation banner (used by quote.js). Colours and sizes for the
+   banner are set here.
+   ===================================================================== */
+.quote-banner {
+  --qb-ink: #1f3a63;            /* verse colour */
+  --qb-soft: #4b5a70;           /* translation colour */
+  --qb-gold: #b8893b;           /* divider colour */
+  --qb-base: #f6f2e8;           /* colour behind the background picture */
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--qb-base);
+  border-top: 1px solid var(--border, #e3e6ec);
+}
+.qb-bg {
+  position: absolute; inset: 0; z-index: -1;
+  background-color: var(--qb-base);
+  background-size: cover; background-position: center bottom; background-repeat: no-repeat;
+}
+.qb-inner {
+  max-width: 1200px; margin: 0 auto; padding: 48px 20px 58px;
+  display: grid; grid-template-columns: minmax(220px, 34%) minmax(0, 1fr); gap: 28px; align-items: center;
+  min-height: 330px;
+}
+.quote-banner.no-art .qb-inner { grid-template-columns: minmax(0, 1fr); }
+.qb-art { align-self: center; }
+/* The picture's paper background melts into the banner: "multiply" blending + soft faded edges */
+.qb-art img {
+  width: 100%; max-width: 420px; height: auto; display: block; margin: -18px auto;
+  mix-blend-mode: multiply; opacity: .95;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 84%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(to right, transparent, #000 16%, #000 84%, transparent), linear-gradient(to bottom, transparent, #000 14%, #000 84%, transparent);
+          mask-composite: intersect;
+}
+
+.qb-text { margin: 0; text-align: center; padding: 0 10px; }
+.qb-verse {
+  margin: 0; color: var(--qb-ink);
+  /* The usual Devanagari fonts of each device (the same ones other websites show) */
+  font-family: "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Devanagari Sangam MN", "Mangal", sans-serif;
+  font-size: clamp(1.3rem, 2.3vw, 1.9rem); line-height: 1.8; font-weight: 500;
+  letter-spacing: .005em; text-wrap: balance;
+}
+.qb-line { display: block; }
+.qb-translit {
+  margin: 8px 0 0; color: var(--qb-soft);
+  font-family: "Cormorant Garamond", "Source Serif 4", Georgia, serif; font-style: italic; font-weight: 500;
+  font-size: clamp(1rem, 1.35vw, 1.16rem); line-height: 1.55; letter-spacing: .01em;
+}
+.qb-divider { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 16px auto 14px; }
+.qb-divider span { height: 1px; width: 64px; background: linear-gradient(to right, transparent, var(--qb-gold)); }
+.qb-divider span:last-child { transform: scaleX(-1); }
+.qb-divider i { width: 7px; height: 7px; transform: rotate(45deg); border: 1.5px solid var(--qb-gold); }
+.qb-translation {
+  margin: 0 auto; max-width: 640px; color: var(--qb-soft);
+  font-family: "Cormorant Garamond", "Source Serif 4", Georgia, serif; font-style: italic; font-weight: 500;
+  font-size: clamp(1.08rem, 1.55vw, 1.3rem); line-height: 1.55; text-wrap: balance;
+}
+.qb-translation::before { content: "\201C"; }
+.qb-translation::after { content: "\201D"; }
+.qb-attribution {
+  position: absolute; right: max(20px, calc((100% - 1200px) / 2 + 20px)); bottom: 16px;
+  font-size: .8rem; letter-spacing: .02em; color: var(--qb-soft);
+}
+.qb-attribution::before { content: "— "; }
+.qb-attribution a { color: inherit; border-bottom: 1px dotted currentColor; }
+.qb-attribution a:hover { color: var(--qb-ink); text-decoration: none; }
+
+/* Dark mode: same picture, dimmed; text in ivory */
+[data-theme="dark"] .quote-banner { --qb-ink: #f1e9d6; --qb-soft: #b9c3d3; --qb-gold: #d1a65a; --qb-base: #121a26; }
+[data-theme="dark"] .qb-bg { filter: brightness(.3) saturate(1.3); }
+[data-theme="dark"] .qb-art img { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; opacity: .85; }
+
+/* Tablets and phones: picture above the text */
+@media (max-width: 860px) {
+  .qb-inner { grid-template-columns: minmax(0, 1fr); gap: 6px; padding: 30px 18px 52px; min-height: 0; }
+  .qb-art { order: -1; justify-self: center; width: min(82%, 340px); margin: 0; }
+  .qb-art img { margin: -10px auto 0; }
+  .qb-attribution { left: 18px; right: 18px; text-align: right; }
+}
+@media (max-width: 480px) {
+  .qb-verse { font-size: 1.12rem; line-height: 1.85; }
+  .qb-translit { font-size: .95rem; }
+  .qb-divider span { width: 40px; }
+}
+@media print { .quote-banner { display: none !important; } }

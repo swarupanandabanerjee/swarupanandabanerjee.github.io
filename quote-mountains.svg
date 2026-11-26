@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax slice">
+  <!-- Soft mountain background for the quote banner. Change the colours below to restyle it. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#dfeaf5"/>
+      <stop offset=".62" stop-color="#f4f1e8"/>
+      <stop offset="1" stop-color="#fbf8f0"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#fff6dc" stop-opacity=".95"/>
+      <stop offset="1" stop-color="#fff6dc" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbf8f0" stop-opacity="0"/>
+      <stop offset="1" stop-color="#fbf8f0" stop-opacity=".95"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="420" fill="url(#sky)"/>
+  <circle cx="1180" cy="150" r="150" fill="url(#sun)"/>
+  <!-- far range -->
+  <path d="M0 260 L90 214 L170 238 L270 176 L360 224 L450 192 L540 232 L640 168 L740 216 L830 186 L930 226 L1040 160 L1130 204 L1220 178 L1320 220 L1420 172 L1510 206 L1600 188 L1600 420 L0 420 Z" fill="#c9d8e8" opacity=".75"/>
+  <!-- middle range -->
+  <path d="M0 300 C80 270 140 250 220 262 C300 274 360 236 450 244 C540 252 600 284 700 270 C800 256 860 226 960 238 C1060 250 1120 282 1220 272 C1320 262 1400 236 1500 250 C1560 258 1600 270 1600 270 L1600 420 L0 420 Z" fill="#b5c9de" opacity=".6"/>
+  <!-- near hills -->
+  <path d="M0 340 C120 318 220 306 340 318 C460 330 560 350 700 336 C840 322 940 300 1080 312 C1220 324 1320 346 1460 334 C1530 328 1600 322 1600 322 L1600 420 L0 420 Z" fill="#a7bcd3" opacity=".45"/>
+  <rect y="250" width="1600" height="170" fill="url(#mist)"/>
+</svg>

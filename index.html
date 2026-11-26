@@ -82,12 +82,13 @@ window.MathJax = {
     "https://scholar.google.com/citations?user=_a5852EAAAAJ",
     "https://www.researchgate.net/profile/Swarupananda-Banerjee",
     "https://orcid.org/0009-0005-6362-4923",
-    "https://www.linkedin.com/in/iamswarupananda"
+    "https://www.linkedin.com/in/iamswarupananda",
+    "https://x.com/iamswarupananda"
   ]
 }
 </script>
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- Top menu bar: built automatically from site.js -->
@@ -95,9 +96,36 @@ window.MathJax = {
   <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
 </header>
 
-<div class="layout">
-  <!-- Left sidebar (photo, name, links): built automatically from site.js -->
-  <aside id="site-sidebar" aria-label="Profile"></aside>
+<div class="layout home-layout">
+
+  <!-- LEFT: photos + "Latest" banner. This column stays fixed while the right side scrolls. -->
+  <aside class="home-aside" aria-label="Photos and latest update">
+
+    <div class="slider" data-slider data-auto-photos="image-" data-auto-max="12" aria-roledescription="carousel" aria-label="Photos">
+      <div class="slides">
+        <!-- ================================================================
+             ✏️ PHOTOS — nothing to edit here.
+             Just upload more photos to the repository (top level, no folder)
+             named exactly:  image-2.jpg, image-3.jpg, image-4.jpg, …
+             (small letters, a hyphen, no spaces; .jpg, .jpeg or .png all work).
+             The site finds them by itself and adds them to the slider in
+             number order, up to image-12. Don't skip a number: if image-3 is
+             missing, image-4 is not looked for.
+             Portrait photos work best (about 900 × 1200 px, 3:4).
+             ================================================================ -->
+        <figure class="slide"><img src="profile-full.jpg" alt="Swarupananda Banerjee" width="600" height="804"></figure>
+      </div>
+      <button class="slider-btn slider-prev" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="slider-btn slider-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      <div class="slider-dots" role="tablist" aria-label="Choose photo"></div>
+    </div>
+
+    <!-- "Latest" banner: filled automatically with the newest item in news.js -->
+    <a class="ticker" id="ticker" href="news.html">
+      <span class="ticker-label"><span class="live-dot" aria-hidden="true"></span>Latest</span>
+      <span class="ticker-window"><span class="ticker-move"></span></span>
+    </a>
+  </aside>
 
   <main id="main" class="main">
 
@@ -135,28 +163,117 @@ window.MathJax = {
       </ul>
     </section>
 
-    <section class="card">
-      <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5Z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg>News</h2>
-      <!-- ================================================================
-           ✏️ ADD NEWS HERE. Copy one line from <li> to </li>, paste it at
-           the TOP of the list (newest first), and change the date & text.
-           ================================================================ -->
-      <ul class="news">
-        <li><span class="date">Oct 2026</span><span>New preprint on arXiv: <a href="publications.html"><em>The Vanishing-Diffusion Limit of an Incompressible Visco-Morphoelastic System: Weak Solutions and a Jaumann Defect</em></a>.</span></li>
-        <li><span class="date">Aug 2026</span><span>Joined Latexio as a LaTeX Research Intern (research and product support).</span></li>
-        <li><span class="date">Jan 2026</span><span>Started reviewing NPTEL video transcripts for Advanced Engineering Mathematics and Advanced Theory of ODEs.</span></li>
-        <li><span class="date">Oct 2025</span><span>Joined the GATE&ndash;NPTEL project as a Subject Matter Expert for GATE Mathematics.</span></li>
-        <li><span class="date">Jul 2025</span><span>Began serving as a teaching assistant for NPTEL courses and IIT Kharagpur mathematics courses.</span></li>
-        <li><span class="date">May 2025</span><span>Attended the NCM Workshop on Theoretical Aspects of Incompressible Navier&ndash;Stokes Equations at IISER Kolkata.</span></li>
-        <li><span class="date">Jul 2024</span><span>Started my PhD in the Department of Mathematics, IIT Kharagpur.</span></li>
+    <section class="card" id="news">
+      <div class="card-head">
+        <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5Z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg>News &amp; Updates</h2>
+        <a class="view-all" href="news.html">View all<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+      </div>
+      <!-- ✏️ News items are written in news.js (not here). The 5 newest are shown. -->
+      <ul class="news" data-news="5">
+        <li><span class="date">Oct 2026</span><span>New preprint on arXiv. <a href="news.html">See all news</a>.</span></li>
       </ul>
     </section>
 
   </main>
 </div>
 
+<!-- ================================================================
+     QUOTATION BANNER (text and pictures are set in quote.js)
+     ✏️ To use another quotation, change "gita-9-34"; to hide it, delete this line.
+     ================================================================ -->
+<section class="quote-banner" data-quote="gita-9-34"></section>
+
+<!-- ================================================================
+     CONTACT, PROFILES & VISITORS block at the bottom of the Home page
+     ================================================================ -->
+<section class="home-contact" aria-label="Contact, profiles and visitors">
+  <div class="home-contact-inner">
+
+    <!-- Column 1: academic identity & contact -->
+    <div class="hc-col hc-identity">
+      <p class="hc-eyebrow">Academic Identity &amp; Contact</p>
+      <p class="hc-name">Swarupananda Banerjee</p>
+      <p class="hc-role">Research Scholar</p>
+      <address class="hc-address">
+        <span class="hc-line"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-5 7 5v11M9 21v-5h6v5M9 12h.01M15 12h.01"/></svg><span><a href="https://www.iitkgp.ac.in/department/MA" target="_blank" rel="noopener">Department of Mathematics</a><br>Indian Institute of Technology Kharagpur</span></span>
+        <span class="hc-line"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>Kharagpur, West Bengal, India &ndash; 721302</span></span>
+        <span class="hc-line"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg><span><span class="hc-label">Institutional email</span><a href="mailto:sbanerjee.24@kgpian.iitkgp.ac.in">sbanerjee.24@kgpian.iitkgp.ac.in</a></span></span>
+      </address>
+      <!-- ✏️ MAP: Google Map pinned on "Department Of Mathematics", IIT Kharagpur
+           (from your Google Maps link). To change it: in Google Maps open the
+           place → Share → "Embed a map" → copy only the address inside src="…"
+           and paste it in place of the address after <iframe src=" below. -->
+      <div class="hc-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1200!2d87.3107575!3d22.3201697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1d4404d0d05a91%3A0xa5e43b1be710d327!2sDepartment%20Of%20Mathematics!5e0!3m2!1sen!2sin!4v1764150000000" title="Map: Department of Mathematics, IIT Kharagpur" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+        <a class="hc-map-link" href="https://maps.app.goo.gl/HfF6ojXcJTWH85Vy5" target="_blank" rel="noopener">Open in Google Maps<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+
+    <!-- Column 2: connect & collaborate (official logos) -->
+    <div class="hc-col hc-connect">
+      <p class="hc-eyebrow">Connect &amp; Collaborate</p>
+      <nav class="connect-grid" aria-label="Academic and social profiles">
+          <a class="connect-link scholar" href="https://scholar.google.com/citations?user=_a5852EAAAAJ&amp;hl=en" target="_blank" rel="noopener me" data-tip="View my Google Scholar profile" aria-label="Google Scholar: View my Google Scholar profile">
+            <span class="cl-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></span><span class="cl-text"><span class="cl-name">Google Scholar</span><span class="cl-sub">Publications &amp; citations</span></span>
+          </a>
+          <a class="connect-link rg" href="https://www.researchgate.net/profile/Swarupananda-Banerjee" target="_blank" rel="noopener me" data-tip="View my ResearchGate profile" aria-label="ResearchGate: View my ResearchGate profile">
+            <span class="cl-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M19.586 0c-.818 0-1.508.19-2.073.565-.563.377-.97.936-1.213 1.68a3.193 3.193 0 0 0-.112.437 8.365 8.365 0 0 0-.078.53 9 9 0 0 0-.05.727c-.01.282-.013.621-.013 1.016a31.121 31.123 0 0 0 .014 1.017 9 9 0 0 0 .05.727 7.946 7.946 0 0 0 .077.53h-.005a3.334 3.334 0 0 0 .113.438c.245.743.65 1.303 1.214 1.68.565.376 1.256.564 2.075.564.8 0 1.536-.213 2.105-.603.57-.39.94-.916 1.175-1.65.076-.235.135-.558.177-.93a10.9 10.9 0 0 0 .043-1.207v-.82c0-.095-.047-.142-.14-.142h-3.064c-.094 0-.14.047-.14.141v.956c0 .094.046.14.14.14h1.666c.056 0 .084.03.084.086 0 .36 0 .62-.036.865-.038.244-.1.447-.147.606-.108.385-.348.664-.638.876-.29.212-.738.35-1.227.35-.545 0-.901-.15-1.21-.353-.306-.203-.517-.454-.67-.915a3.136 3.136 0 0 1-.147-.762 17.366 17.367 0 0 1-.034-.656c-.01-.26-.014-.572-.014-.939a26.401 26.403 0 0 1 .014-.938 15.821 15.822 0 0 1 .035-.656 3.19 3.19 0 0 1 .148-.76 1.89 1.89 0 0 1 .742-1.01c.344-.244.593-.352 1.137-.352.508 0 .815.096 1.144.303.33.207.528.492.764.925.047.094.111.118.198.07l1.044-.43c.075-.048.09-.115.042-.199a3.549 3.549 0 0 0-.466-.742 3 3 0 0 0-.679-.607 3.313 3.313 0 0 0-.903-.41A4.068 4.068 0 0 0 19.586 0zM8.217 5.836c-1.69 0-3.036.086-4.297.086-1.146 0-2.291 0-3.007-.029v.831l1.088.2c.744.144 1.174.488 1.174 2.264v11.288c0 1.777-.43 2.12-1.174 2.263l-1.088.2v.832c.773-.029 2.12-.086 3.465-.086 1.29 0 2.951.057 3.667.086v-.831l-1.49-.2c-.773-.115-1.174-.487-1.174-2.264v-4.784c.688.057 1.29.057 2.206.057 1.748 3.123 3.41 5.472 4.355 6.56.86 1.032 2.177 1.691 3.839 1.691.487 0 1.003-.086 1.318-.23v-.744c-1.031 0-2.063-.716-2.808-1.518-1.26-1.376-2.95-3.582-4.355-6.074 2.32-.545 4.04-2.722 4.04-4.9 0-3.208-2.492-4.698-5.758-4.698zm-.515 1.29c2.406 0 3.839 1.26 3.839 3.552 0 2.263-1.547 3.782-4.097 3.782-.974 0-1.404-.03-2.063-.086v-7.19c.66-.059 1.547-.059 2.32-.059z"/></svg></span><span class="cl-text"><span class="cl-name">ResearchGate</span><span class="cl-sub">Papers &amp; discussions</span></span>
+          </a>
+          <a class="connect-link orcid" href="https://orcid.org/0009-0005-6362-4923" target="_blank" rel="noopener me" data-tip="View my ORCID record" aria-label="ORCID: View my ORCID record">
+            <span class="cl-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg></span><span class="cl-text"><span class="cl-name">ORCID</span><span class="cl-sub">0009-0005-6362-4923</span></span>
+          </a>
+          <a class="connect-link linkedin" href="https://www.linkedin.com/in/iamswarupananda" target="_blank" rel="noopener me" data-tip="Connect with me on LinkedIn" aria-label="LinkedIn: Connect with me on LinkedIn">
+            <span class="cl-logo"><svg viewBox="0 0 448 512" aria-hidden="true"><path fill="currentColor" d="M416 32L31.9 32C14.3 32 0 46.5 0 64.3L0 447.7C0 465.5 14.3 480 31.9 480L416 480c17.6 0 32-14.5 32-32.3l0-383.4C448 46.5 433.6 32 416 32zM135.4 416l-66.4 0 0-213.8 66.5 0 0 213.8-.1 0zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77zM384.3 416l-66.4 0 0-104c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9l0 105.8-66.4 0 0-213.8 63.7 0 0 29.2 .9 0c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9l0 117.2z"/></svg></span><span class="cl-text"><span class="cl-name">LinkedIn</span><span class="cl-sub">Professional profile</span></span>
+          </a>
+          <a class="connect-link x" href="https://x.com/iamswarupananda" target="_blank" rel="noopener me" data-tip="Follow me on X" aria-label="X (Twitter): Follow me on X">
+            <span class="cl-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></span><span class="cl-text"><span class="cl-name">X (Twitter)</span><span class="cl-sub">@iamswarupananda</span></span>
+          </a>
+          <!-- ✏️ GMAIL (hidden until you add your address). To show it: on the
+               next line put your address in place of YOUR.NAME@gmail.com, then
+               remove the comment brackets on that line (the opening one just
+               before <a and the closing one just after </a>). -->
+          <!-- <a class="connect-link gmail" href="mailto:YOUR.NAME@gmail.com" data-tip="Write to my personal Gmail" aria-label="Gmail: Write to my personal Gmail"> <span class="cl-logo"><svg viewBox="52 42 88 66" aria-hidden="true"><path fill="#4285f4" d="M58 108h14V74L52 59v43c0 3.32 2.69 6 6 6"/><path fill="#34a853" d="M120 108h14c3.32 0 6-2.69 6-6V59l-20 15"/><path fill="#fbbc04" d="M120 48v26l20-15v-8c0-7.42-8.47-11.65-14.4-7.2"/><path fill="#ea4335" d="M72 74V48l24 18 24-18v26L96 92"/><path fill="#c5221f" d="M52 51v8l20 15V48l-5.6-4.2c-5.94-4.45-14.4-.22-14.4 7.2"/></svg></span><span class="cl-text"><span class="cl-name">Gmail</span><span class="cl-sub">Personal email</span></span>           </a> -->
+      </nav>
+    </div>
+
+    <!-- Column 3: global visitor overview -->
+    <div class="hc-col hc-visitors">
+      <p class="hc-eyebrow">Global Visitor Overview</p>
+      <div class="visitor-card">
+        <div class="visitor-head">
+          <div class="visitor-count">
+            <span class="vc-number is-pending" data-visitor-count>&mdash;</span>
+            <span class="vc-label">Total visits</span>
+          </div>
+          <span class="vc-pending">Not yet connected</span>
+          <span class="live-badge"><span class="live-dot" aria-hidden="true"></span>Live</span>
+        </div>
+        <div class="visitor-slot" data-visitor-slot>
+          <!-- ================================================================
+               ✏️ CLUSTRMAPS (free) — visitor map + total count.
+               1. Sign up at https://clustrmaps.com and add your site
+                  https://swarupanandabanerjee.github.io
+               2. Choose the "Map" widget, set width about 320 and switch the
+                  visitor counter ON, then copy the one-line <script …> code.
+               3. Paste it on the empty line below. Delete nothing else.
+               ================================================================ -->
+
+        </div>
+        <div class="visitor-placeholder">
+          <img src="world-dots.svg" alt="" width="320" height="160">
+          <p>Visitor statistics will appear here once the counter is connected.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- Footer: built automatically from site.js -->
 <footer id="site-footer"></footer>
 <script src="site.js"></script>
+<script src="news.js"></script>
+<script src="home.js"></script>
+<script src="quote.js"></script>
 </body>
 </html>

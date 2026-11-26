@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!-- ================================================================
+     PAGE SETTINGS. Usually you only need to change <title> and
+     the "description" text below. Everything else can stay as it is.
+     ================================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>News &amp; Updates | Swarupananda Banerjee</title>
+<meta name="description" content="News and updates from Swarupananda Banerjee, PhD research scholar in the Department of Mathematics, IIT Kharagpur: papers, workshops, teaching and more.">
+<meta name="author" content="Swarupananda Banerjee">
+<link rel="canonical" href="https://swarupanandabanerjee.github.io/news.html">
+
+<!-- Social media preview (LinkedIn, WhatsApp, X, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Swarupananda Banerjee">
+<meta property="og:title" content="News &amp; Updates | Swarupananda Banerjee">
+<meta property="og:description" content="News and updates from Swarupananda Banerjee, PhD research scholar in the Department of Mathematics, IIT Kharagpur: papers, workshops, teaching and more.">
+<meta property="og:url" content="https://swarupanandabanerjee.github.io/news.html">
+<meta property="og:image" content="https://swarupanandabanerjee.github.io/profile-full.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1d4f91">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- Light/dark mode: apply saved choice before the page draws (prevents a flash) -->
+<script>(function(){var t;try{t=localStorage.getItem('theme');}catch(e){}if(!t){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<!-- Fonts and styles -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<!-- MathJax: write LaTeX with $...$ (inline) or $$...$$ (display) anywhere on the page -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+  options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+};
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Top menu bar: built automatically from site.js -->
+<header id="site-header">
+  <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
+</header>
+
+<div class="layout">
+  <!-- Left sidebar (photo, name, links): built automatically from site.js -->
+  <aside id="site-sidebar" aria-label="Profile"></aside>
+
+  <main id="main" class="main">
+
+    <div class="page-header">
+      <p class="back-link"><a href="index.html">← Back to Home</a></p>
+      <h1>News &amp; Updates</h1>
+      <p class="lead">All updates, newest first: papers, workshops and conferences, teaching, and other milestones.</p>
+    </div>
+
+    <section class="card">
+      <div class="card-head">
+        <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5Z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg>All updates</h2>
+        <span class="news-total"><span id="news-count"></span> items</span>
+      </div>
+      <!-- ✏️ News items are written in news.js (not here). This page shows all of them. -->
+      <ul class="news" data-news="all" data-group-by-year>
+        <li><span class="date"></span><span>Loading… If nothing appears, please enable JavaScript.</span></li>
+      </ul>
+    </section>
+
+  </main>
+</div>
+
+<!-- Footer: built automatically from site.js -->
+<footer id="site-footer"></footer>
+<script src="site.js"></script>
+<script src="news.js"></script>
+<script src="home.js"></script>
+</body>
+</html>
