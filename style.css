@@ -1286,3 +1286,9 @@ html.search-open { overflow: hidden; }
   .brand-en { font-size: .9rem; } .brand-bn { font-size: .7rem; }
 }
 @media (max-width: 360px) { .brand-bn { display: none; } }
+
+/* Visitor map (MapMyVisitors): fit the card, centred, rounded */
+.visitor-slot { width: 100%; padding: 6px 0 2px; }
+.visitor-slot a, .visitor-slot img, .visitor-slot canvas, .visitor-slot iframe { display: block; max-width: 100% !important; height: auto; margin: 0 auto; border-radius: 10px; }
+.visitor-card.has-widget .visitor-head { justify-content: flex-end; }
+.visitor-card.has-widget .visitor-slot { flex: 1 1 auto; align-items: center; }
