@@ -50,8 +50,8 @@ const SITE = {
     { label: "Education",    file: "education.html" },
     { label: "Experience",   file: "experience.html" },
     { label: "Achievements", file: "achievements.html" },
-    { label: "Talks",        file: "talks.html" },
     { label: "Teaching",     file: "teaching.html" },
+    { label: "Talks",        file: "talks.html" },
     { label: "CV",           file: "cv.html" },
     { label: "Contact",      file: "contact.html" }
   ]
