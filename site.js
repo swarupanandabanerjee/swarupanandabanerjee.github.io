@@ -79,6 +79,20 @@ const SITE = {
 (function () {
   "use strict";
 
+  // Email shown in readable pieces that only break before [at] / [dot] (never inside a word):
+  // sbanerjee[dot]24 | [at]kgpian | [dot]iitkgp | [dot]ac[dot]in
+  const mailHTML = (addr) => {
+    const parts = String(addr).split(/(?=\[at\]|\[dot\])/i);
+    const word = (p) => (p || "").replace(/\[(dot|at)\]/gi, "").length;
+    const groups = [];
+    parts.forEach((p, i) => {
+      // a short piece (like "[dot]24" or "[dot]in") stays with the piece before it,
+      // unless the next piece is short too ("[dot]ac" + "[dot]in" travel together)
+      const glue = word(p) <= 3 && groups.length && !/^\[at\]/i.test(p) && !(i + 1 < parts.length && word(parts[i + 1]) <= 3);
+      if (glue) groups[groups.length - 1] += p; else groups.push(p);
+    });
+    return '<span class="mail-text">' + groups.map((g) => "<span>" + esc(g) + "</span>").join("<wbr>") + "</span>";
+  };
   const SOCIAL = {
     facebook: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M13.6 21.5v-8.1h2.8l.4-3.3h-3.2V8c0-.9.3-1.6 1.6-1.6h1.7V3.5c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.4v3.3h2.8v8.1h3.4Z"/></svg>',
     instagram: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><circle cx="12" cy="12" r="4.1"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>',
@@ -191,7 +205,7 @@ const SITE = {
       ${advisors ? `<div class="sidebar-advisors"><p class="sa-label">${ICONS.cap}${SITE.advisors.length > 1 ? "Advisors" : "Advisor"}</p><ul>${advisors}</ul></div>` : ""}
       <ul class="sidebar-meta">
         <li>${ICONS.pin}<span>${esc(SITE.location)}</span></li>
-        <li>${ICONS.email}<a href="#" data-mail="${esc(SITE.email)}">${esc(SITE.email).replace("[at]", "[at]<wbr>")}</a></li>
+        <li class="sm-email">${ICONS.email}<a href="#" data-mail="${esc(SITE.email)}" aria-label="Email">${mailHTML(SITE.email)}</a></li>
       </ul>
       <div class="profile-links">${links}</div>
       ${onCvPage ? "" : `<a class="btn outline cv-btn" href="${esc(SITE.cvPage || "cv.html")}">${ICONS.cv}View CV</a>`}`;

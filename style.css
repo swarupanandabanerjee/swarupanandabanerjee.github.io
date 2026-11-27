@@ -1244,3 +1244,23 @@ html.search-open { overflow: hidden; }
 
 /* News column: blank space between the last item and the first item coming round again */
 .nr-gap { list-style: none; margin: 0; pointer-events: none; }
+
+/* =====================================================================
+   18. Email address layout: the address is split into pieces that never
+   break inside ("sbanerjee[dot]24", "[at]kgpian", "[dot]iitkgp",
+   "[dot]ac[dot]in"); lines may only break between pieces.
+   ===================================================================== */
+.mail-text { display: inline; overflow-wrap: normal; word-break: normal; text-wrap: balance; }
+.mail-text > span { white-space: nowrap; }
+.sidebar-meta a, .hc-address a, .cv-contact a, dd a[data-mail] { overflow-wrap: normal; word-break: normal; }
+/* sidebar: icon and address share one row; the address uses the full width */
+.sidebar-meta li { align-items: flex-start; }
+.sidebar-meta li > a, .sidebar-meta li > span { flex: 1 1 auto; min-width: 0; line-height: 1.5; }
+.sidebar-meta li.sm-email a { display: inline-block; font-size: .86rem; letter-spacing: -.005em; text-wrap: balance; }
+.sidebar-meta svg { margin-top: 3px; }
+/* Home contact card */
+.hc-line > span { flex: 1 1 auto; min-width: 0; }
+.hc-address a[data-mail], dd a[data-mail] { display: inline-block; max-width: 100%; line-height: 1.5; text-wrap: balance; }
+@media (max-width: 980px) {
+  .sidebar-meta li.sm-email { flex: 1 1 100%; }
+}
