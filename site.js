@@ -58,7 +58,7 @@ const SITE = {
     { label: "Teaching",     file: "teaching.html" },
     { label: "Talks",        file: "talks.html" },
     { label: "CV",           file: "cv.html" },
-    { label: "Contact",      file: "contact.html" }
+    { label: "Life & Beyond", file: "life.html" }
   ]
 };
 /* ======================= END OF SITE SETTINGS ========================

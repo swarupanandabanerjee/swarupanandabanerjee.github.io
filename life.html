@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<!-- ================================================================
+     PAGE SETTINGS. Usually you only need to change <title> and
+     the "description" text below. Everything else can stay as it is.
+     ================================================================ -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Life &amp; Beyond | Swarupananda Banerjee</title>
+<meta name="description" content="Life beyond research: photographs, travels, favourite quotations and vlogs of Swarupananda Banerjee.">
+<meta name="author" content="Swarupananda Banerjee">
+<link rel="canonical" href="https://swarupanandabanerjee.github.io/life.html">
+
+<!-- Social media preview (LinkedIn, WhatsApp, X, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Swarupananda Banerjee">
+<meta property="og:title" content="Life &amp; Beyond | Swarupananda Banerjee">
+<meta property="og:description" content="Life beyond research: photographs, travels, favourite quotations and vlogs of Swarupananda Banerjee.">
+<meta property="og:url" content="https://swarupanandabanerjee.github.io/life.html">
+<meta property="og:image" content="https://swarupanandabanerjee.github.io/profile-full.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#1d4f91">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<!-- Light/dark mode: apply saved choice before the page draws (prevents a flash) -->
+<script>(function(){var t;try{t=localStorage.getItem('theme');}catch(e){}if(!t){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);})();</script>
+
+<!-- Fonts and styles -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<link rel="stylesheet" href="style.css">
+
+<!-- Life & Beyond page only -->
+<style>
+.m-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+.m-chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: .9rem; cursor: pointer; }
+.m-chip svg { width: 16px; height: 16px; color: var(--accent); }
+.m-chip span { color: var(--muted); font-size: .8rem; }
+.m-chip:hover { border-color: var(--accent); }
+.m-chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--accent-text); }
+.m-chip.is-on svg, .m-chip.is-on span { color: var(--accent-text); }
+.m-grid { columns: 3 260px; column-gap: 18px; }
+.m-card { break-inside: avoid; margin: 0 0 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.m-card[hidden] { display: none; }
+.m-media { display: block; position: relative; width: 100%; padding: 0; border: 0; background: var(--surface-2); cursor: zoom-in; }
+.m-media img { display: block; width: 100%; height: auto; transition: transform .35s ease; }
+.m-card:hover .m-media img { transform: scale(1.03); }
+.m-vlog .m-media { cursor: pointer; aspect-ratio: 16 / 9; overflow: hidden; }
+.m-vlog .m-media img { height: 100%; object-fit: cover; }
+.m-play { position: absolute; inset: 0; margin: auto; width: 58px; height: 58px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; display: grid; place-items: center; }
+.m-play svg { width: 26px; height: 26px; margin-left: 3px; }
+.m-body { padding: 14px 16px 16px; }
+.m-body h3 { margin: 6px 0 2px; font-size: 1.02rem; line-height: 1.35; }
+.m-kind { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.m-kind svg { width: 14px; height: 14px; color: var(--accent); }
+.m-caption { margin: 6px 0 0; line-height: 1.45; }
+.m-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 6px 0 0; font-size: .85rem; color: var(--muted); }
+.m-place { display: inline-flex; align-items: center; gap: 4px; }
+.m-place svg { width: 14px; height: 14px; }
+.m-text { margin: 8px 0 0; font-size: .93rem; line-height: 1.55; }
+.m-quote { padding: 18px 20px 18px; background: linear-gradient(160deg, var(--accent-soft), var(--surface) 70%); }
+.m-quote blockquote { margin: 10px 0 0; padding: 0; border: 0; position: relative; }
+.m-quote blockquote p { margin: 0; font-family: "Source Serif 4", Georgia, serif; font-size: 1.16rem; line-height: 1.5; font-style: italic; }
+.m-author { margin: 10px 0 0; text-align: right; font-size: .9rem; color: var(--muted); }
+.m-empty { color: var(--muted); }
+/* lightbox */
+.m-lightbox { width: min(1000px, calc(100vw - 32px)); max-height: calc(100vh - 40px); padding: 0; border: 0; border-radius: 14px; background: #0f141b; color: #e5e9f0; overflow: hidden; }
+.m-lightbox::backdrop { background: rgba(8, 10, 14, .82); }
+.lb-stage img { display: block; max-width: 100%; max-height: calc(100vh - 120px); margin: 0 auto; }
+.lb-video { position: relative; aspect-ratio: 16 / 9; }
+.lb-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.lb-caption { margin: 0; padding: 12px 52px 14px 18px; font-size: .92rem; color: #b9c2cf; }
+.lb-caption strong { color: #fff; font-weight: 600; }
+.lb-close { position: absolute; top: 10px; right: 10px; z-index: 2; width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+@media (max-width: 640px) { .m-grid { columns: 1; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Top menu bar: built automatically from site.js -->
+<header id="site-header">
+  <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="education.html">Education</a> · <a href="life.html">Experience</a> · <a href="achievements.html">Achievements</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
+</header>
+
+<div class="layout">
+  <!-- Left sidebar (photo, name, links): built automatically from site.js -->
+  <aside id="site-sidebar" aria-label="Profile"></aside>
+
+  <main id="main" class="main">
+
+    <div class="page-header">
+      <h1>Life &amp; Beyond</h1>
+      <p class="lead">Moments away from mathematics: places I have visited, photographs, words I live by, and the occasional vlog.</p>
+    </div>
+
+    <!-- ✏️ Nothing to edit here. Everything on this page comes from moments.js
+         (open that file to add photos, travels, quotes or vlogs). -->
+    <div class="m-filters" id="moments-filters" role="toolbar" aria-label="Filter"></div>
+    <div class="m-grid" id="moments-grid">
+      <noscript><p class="m-empty">Please enable JavaScript to see this page.</p></noscript>
+    </div>
+
+    <dialog class="m-lightbox" id="moments-lightbox" aria-label="Viewer">
+      <button type="button" class="lb-close" aria-label="Close">&times;</button>
+      <div class="lb-stage"></div>
+      <p class="lb-caption"></p>
+    </dialog>
+
+  </main>
+</div>
+
+<!-- Footer: built automatically from site.js -->
+<footer id="site-footer"></footer>
+<script src="site.js"></script>
+<script src="moments.js"></script>
+</body>
+</html>

@@ -78,23 +78,23 @@ window.MathJax = {
 
 /* ---------- Print CV ---------- */
 @media print {
-  @page { size: A4; margin: 16mm 15mm; }
+  @page { size: A4; margin: 13mm 14mm 16mm; }
   html, body { background: #fff !important; color: #111 !important; }
   :root, [data-theme="dark"] { --text: #111; --muted: #555; --accent: #1d4f91; --border: #d6dbe3; --surface: #fff; --surface-2: #fff; --accent-soft: #fff; }
   #site-header, #site-sidebar, #site-footer, .skip-link, .page-header, .cv-actions, .cv-dialog, .cv-screen-only { display: none !important; }
   .layout { display: block !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
   .main { width: 100% !important; }
-  body { font-size: 10.5pt; line-height: 1.45; }
+  body { font-size: 10pt; line-height: 1.4; }
   a { color: inherit !important; text-decoration: none !important; }
-  .card { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; margin: 0 0 13pt !important; border-radius: 0 !important; }
+  .card { background: none !important; border: 0 !important; box-shadow: none !important; padding: 0 !important; margin: 0 0 11pt !important; border-radius: 0 !important; }
   .grid-2 { display: grid !important; grid-template-columns: 1fr 1fr; gap: 0 18pt !important; margin: 0 !important; }
-  .grid-2 > .card { margin-bottom: 13pt !important; }
+  .grid-2 > .card { margin-bottom: 11pt !important; }
   .cv-ref p { font-size: 9.8pt; line-height: 1.45; }
   .cv-ref .ref-name { font-size: 10.5pt; }
   .card-title { font-size: 11pt !important; letter-spacing: .09em; text-transform: uppercase; color: #1d4f91 !important; border-bottom: 1.2pt solid #1d4f91; padding-bottom: 3pt; margin: 0 0 7pt !important; gap: 6pt !important; break-after: avoid; }
   .card-title svg { display: none !important; }
   .entries { padding: 0 !important; }
-  .entry { padding: 0 0 6pt 0 !important; border: 0 !important; break-inside: avoid; }
+  .entry { padding: 0 0 5pt 0 !important; border: 0 !important; break-inside: avoid; }
   .entry::before, .entry::after { display: none !important; }
   .entry-title { font-size: 10.5pt; }
   .entry-date { font-size: 9.5pt; color: #444 !important; }
@@ -109,8 +109,9 @@ window.MathJax = {
   #cv-contact { break-inside: avoid; }
   .cv-refs { gap: 12pt; }
   .cv-ref { break-inside: avoid; }
-  .cv-print-only { display: block; }
-  .cv-print-foot { margin-top: 14pt; padding-top: 6pt; border-top: .6pt solid #ccc; font-size: 8.5pt; color: #666; text-align: center; }
+  /* The footer on every printed page is added by the script at the bottom
+     (Chrome/Edge: page-margin footer with page numbers; other browsers: the line below). */
+  .no-marginbox .cv-print-foot { display: block; position: fixed; left: 0; right: 0; bottom: -11mm; font-size: 8pt; color: #666; text-align: center; }
 }
 </style>
 </head>
@@ -396,7 +397,7 @@ window.MathJax = {
       </div>
     </section>
 
-    <p class="cv-print-only cv-print-foot">Profile summary printed from swarupanandabanerjee.github.io/cv.html &middot; <span id="cv-print-date"></span></p>
+    <p class="cv-print-only cv-print-foot" id="cv-print-foot"></p>
 
     <!-- Request CV dialog -->
     <dialog class="cv-dialog" id="cv-dialog" aria-labelledby="cv-dlg-title">
@@ -481,9 +482,29 @@ window.MathJax = {
     step1.hidden = true; step2.hidden = false;
   });
 
+  /* Print footer on every page: "Profile summary printed from … · date and time" */
+  var isChromium = !!window.chrome;
+  if (!isChromium) document.documentElement.classList.add('no-marginbox');
+  function stamp() {
+    var now = new Date();
+    var date = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    var time = now.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZoneName: 'short' });
+    return 'Profile summary printed from swarupanandabanerjee.github.io/cv.html \u00b7 ' + date + ', ' + time;
+  }
+  function preparePrint() {
+    var text = stamp();
+    document.getElementById('cv-print-foot').textContent = text;
+    var st = document.getElementById('cv-page-footer');
+    if (!st) { st = document.createElement('style'); st.id = 'cv-page-footer'; document.head.appendChild(st); }
+    var css = JSON.stringify(text);
+    st.textContent = isChromium
+      ? '@media print { @page { @bottom-left { content: ' + css + '; font-family: Inter, Arial, sans-serif; font-size: 8pt; color: #666; } ' +
+        '@bottom-right { content: "Page " counter(page) " of " counter(pages); font-family: Inter, Arial, sans-serif; font-size: 8pt; color: #666; } } }'
+      : '';
+  }
+  window.addEventListener('beforeprint', preparePrint);   // also covers Ctrl+P / Cmd+P
   document.getElementById('cv-print-btn').addEventListener('click', function () {
-    var d = document.getElementById('cv-print-date');
-    if (d) d.textContent = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    preparePrint();
     window.print();
   });
 })();
