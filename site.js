@@ -161,3 +161,89 @@ const SITE = {
       </div>`;
   }
 })();
+
+/* =====================================================================
+   Motion on every page (styles in style.css, section 14):
+   menu-bar shadow + reading line, cards rising in, timelines drawing
+   themselves, tags popping in one by one. Nothing to edit here.
+   ===================================================================== */
+(function () {
+  "use strict";
+  const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const start = () => {
+    /* B. Menu bar shadow + reading-progress line */
+    const bar = document.querySelector(".topbar");
+    if (bar) {
+      const line = document.createElement("span");
+      line.className = "read-progress"; line.setAttribute("aria-hidden", "true");
+      bar.appendChild(line);
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        bar.classList.toggle("is-scrolled", window.scrollY > 8);
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        line.style.setProperty("--p", max > 40 ? Math.min(1, window.scrollY / max).toFixed(4) : 0);
+      };
+      window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      window.addEventListener("resize", update);
+      update();
+    }
+
+    if (reduce || !("IntersectionObserver" in window)) return;
+
+    /* Sidebar slides in once per visit (not on every page change) */
+    const side = document.querySelector(".sidebar");
+    try {
+      if (side && !sessionStorage.getItem("sideShown")) { side.classList.add("m-side"); sessionStorage.setItem("sideShown", "1"); }
+    } catch (e) { /* private mode: skip */ }
+
+    /* C. Cards rise in */
+    const cards = Array.from(document.querySelectorAll(".main .card, .main .m-card, .home-contact .hc-col"));
+    cards.forEach((c) => {
+      c.classList.add("m-reveal");
+      c.addEventListener("transitionend", (e) => {
+        if (e.target === c && e.propertyName === "transform" && c.classList.contains("in")) c.classList.add("done");
+      });
+    });
+    /* tags and publications inside a card pop in one by one */
+    document.querySelectorAll(".tags, .pub-list").forEach((list) =>
+      Array.from(list.children).forEach((li, k) => li.style.setProperty("--k", k)));
+
+    /* E. Timelines */
+    const lines = Array.from(document.querySelectorAll(".entries"));
+    lines.forEach((ul) => {
+      const items = Array.from(ul.children);
+      ul.classList.add("m-tl");
+      items.forEach((li, k) => li.style.setProperty("--k", k));
+      ul._doneAfter = items.length * 240 + 900;
+    });
+
+    let batch = 0, resetTimer = null;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        io.unobserve(el);
+        if (el.classList.contains("m-tl")) {
+          el.classList.add("in");
+          setTimeout(() => el.classList.add("drawn"), el._doneAfter);
+        } else {
+          el.style.setProperty("--d", `${Math.min(batch++, 5) * 110}ms`);
+          el.classList.add("in");
+          setTimeout(() => el.classList.add("done"), 1600);   // safety net if transitionend is missed
+        }
+      });
+      clearTimeout(resetTimer); resetTimer = setTimeout(() => { batch = 0; }, 150);
+    }, { threshold: 0.08, rootMargin: "0px 0px -5% 0px" });
+    cards.forEach((c) => io.observe(c));
+    lines.forEach((l) => io.observe(l));
+    /* Life & Beyond: cards shown later by a filter are revealed straight away */
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".m-chip")) return;
+      setTimeout(() => document.querySelectorAll(".m-card.m-reveal:not(.in)").forEach((c) => { if (!c.hidden) io.observe(c); }), 0);
+    });
+  };
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
+})();

@@ -796,3 +796,89 @@ a.nr-link:hover .nr-text { color: var(--accent); }
   .nr-live::after { animation: none; }
   .ri, .ri::after, .nr-link, .news.is-animated li.news-item { transition: none; }
 }
+
+/* =====================================================================
+   14. Motion (every page). Added by site.js only when JavaScript runs;
+   visitors who ask their device for "reduced motion" see no animation.
+   ===================================================================== */
+
+/* A. Smooth change from page to page (Chrome, Edge, Safari) — the menu and sidebar stay still */
+@view-transition { navigation: auto; }
+.topbar { view-transition-name: topbar; }
+.sidebar { view-transition-name: sidebar; }
+::view-transition-old(root) { animation: vt-out .2s ease both; }
+::view-transition-new(root) { animation: vt-in .38s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes vt-out { to { opacity: 0; transform: translateY(-6px); } }
+@keyframes vt-in { from { opacity: 0; transform: translateY(10px); } }
+
+/* B. Menu bar: soft shadow after scrolling + thin reading-progress line */
+.topbar { transition: box-shadow .3s ease, background-color .2s ease; }
+.topbar.is-scrolled { box-shadow: 0 6px 18px -10px rgba(16, 24, 40, .25); }
+[data-theme="dark"] .topbar.is-scrolled { box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .6); }
+.read-progress {
+  position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; pointer-events: none;
+  background: var(--accent); opacity: .85; transform-origin: 0 50%; transform: scaleX(var(--p, 0));
+}
+
+/* C. Cards rise in, one after another, the first time they scroll into view */
+.m-reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .75s cubic-bezier(.2, .7, .2, 1); transition-delay: var(--d, 0ms); }
+.m-reveal.in { opacity: 1; transform: none; }
+.m-reveal.done { transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; transition-delay: 0ms; }
+.sidebar.m-side { animation: side-in .7s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes side-in { from { opacity: 0; transform: translateX(-14px); } }
+
+/* D. Hover: cards lift a little and their section icon gives a small nod */
+.card.done:hover, .m-card.done:hover { transform: translateY(-3px); box-shadow: 0 10px 28px -12px rgba(16, 24, 40, .22); }
+[data-theme="dark"] .card.done:hover, [data-theme="dark"] .m-card.done:hover { box-shadow: 0 10px 28px -10px rgba(0, 0, 0, .65); }
+.card-title svg, .topic-icon { transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+.card:hover .card-title svg, .card:hover .topic-icon { transform: rotate(-8deg) scale(1.1); }
+
+/* E. Timelines draw themselves: line grows down, dots pop, text slides in — one entry after another */
+.entry { --tl-line: color-mix(in srgb, var(--accent) 28%, var(--border)); border-left-color: var(--tl-line); }
+.entries.m-tl:not(.drawn) .entry { border-left-color: transparent; background: linear-gradient(var(--tl-line), var(--tl-line)) no-repeat; background-origin: border-box; background-size: 2px 0%; }
+.entries.m-tl:not(.drawn) .entry::before { transform: scale(0); }
+.entries.m-tl:not(.drawn) .entry > * { opacity: 0; transform: translateX(10px); }
+.entries.m-tl.in:not(.drawn) .entry { animation: tl-line .55s ease forwards; animation-delay: calc(var(--k, 0) * 240ms + 150ms); }
+.entries.m-tl.in:not(.drawn) .entry::before { animation: tl-dot .45s cubic-bezier(.3, 1.6, .5, 1) forwards; animation-delay: calc(var(--k, 0) * 240ms); }
+.entries.m-tl.in:not(.drawn) .entry > * { animation: tl-txt .55s ease forwards; animation-delay: calc(var(--k, 0) * 240ms + 80ms); }
+@keyframes tl-line { to { background-size: 2px 100%; } }
+@keyframes tl-dot { to { transform: scale(1); } }
+@keyframes tl-txt { to { opacity: 1; transform: none; } }
+
+/* Hover on a timeline entry: its stretch of line turns blue, the dot fills and grows, the text slides */
+.entry, .entry::before, .entry > * { transition: border-color .25s ease, background-color .25s ease, transform .3s cubic-bezier(.3, 1.4, .5, 1), color .25s ease; }
+.entry:hover { border-left-color: var(--accent); }
+.entry:hover::before { background: var(--accent); transform: scale(1.3); }
+.entry.is-live:hover::before { background: #22a559; }
+.entry:hover > * { transform: translateX(4px); }
+.entry:hover .entry-title { color: var(--accent); }
+
+/* Publications: the number and title light up, the entry slides */
+.pub > * { transition: transform .3s cubic-bezier(.3, 1.4, .5, 1), color .25s ease; }
+.pub::before { transition: color .25s ease; }
+.pub:hover::before { color: var(--accent); font-weight: 600; }
+.pub:hover > * { transform: translateX(4px); }
+.pub:hover .pub-title { color: var(--accent); }
+
+/* Tags and pills: small lift; they pop in one by one when their card appears */
+.tag, .pill, .soft-rank { transition: transform .25s cubic-bezier(.3, 1.6, .5, 1), box-shadow .25s ease; }
+.tag:hover, .pill:hover { transform: translateY(-2px); box-shadow: 0 4px 10px -4px color-mix(in srgb, var(--accent) 55%, transparent); }
+.m-reveal .tags > li, .m-reveal .pub-list > .pub { opacity: 0; transform: translateY(8px); }
+.m-reveal.in .tags > li, .m-reveal.in .pub-list > .pub { animation: pop-in .45s cubic-bezier(.2, .7, .2, 1) forwards; animation-delay: calc(var(--k, 0) * 70ms + 250ms); }
+@keyframes pop-in { to { opacity: 1; transform: none; } }
+
+/* Life & Beyond: photo cards zoom their picture a little */
+.m-card .m-media img { transition: transform .5s ease; }
+.m-card:hover .m-media img { transform: scale(1.04); }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+  .entry:hover > *, .pub:hover > *, .tag:hover, .pill:hover, .card:hover .card-title svg, .card:hover .topic-icon { transform: none; }
+}
+/* Printing (e.g. "Print CV"): always show everything */
+@media print {
+  .m-reveal, .m-reveal .tags > li, .m-reveal .pub-list > .pub, .entries.m-tl .entry > * { opacity: 1 !important; transform: none !important; animation: none !important; }
+  .entries.m-tl .entry { border-left-color: var(--border) !important; background: none !important; animation: none !important; }
+  .entries.m-tl .entry::before { transform: none !important; animation: none !important; }
+  .read-progress { display: none; }
+}
