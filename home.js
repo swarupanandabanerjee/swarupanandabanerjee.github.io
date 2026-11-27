@@ -211,11 +211,36 @@
   if (countEl) countEl.textContent = String(items.length);
 
   /* ---------------- 5. Visitor box ---------------- */
-  // Shows the "setup pending" placeholder until the ClustrMaps code is pasted in index.html.
+  // Shows the "setup pending" placeholder until a visitor-map code is pasted in index.html.
   const vbox = document.querySelector("[data-visitor-slot]");
   if (vbox) {
     const hasWidget = !!vbox.querySelector("script, iframe, img, canvas");
     vbox.closest(".visitor-card").classList.toggle("has-widget", hasWidget);
+
+    // Keep the visitor map up to date without reloading the page:
+    // every 60 seconds (only while the map is on screen and the tab is open)
+    // the map picture is fetched again, so new visits and the new total appear.
+    const REFRESH = 60 * 1000;
+    let onScreen = false;
+    const refreshMap = () => {
+      if (document.hidden || !onScreen) return;
+      vbox.querySelectorAll("img").forEach((img) => {
+        const src = img.getAttribute("src");
+        if (!src || src.startsWith("data:")) return;
+        const fresh = new Image();
+        const url = src.replace(/([?&])_r=\d+/, "$1").replace(/[?&]$/, "");
+        fresh.onload = () => { img.src = fresh.src; };          // swap only when the new picture has loaded (no flicker)
+        fresh.src = url + (url.includes("?") ? "&" : "?") + "_r=" + Date.now();
+      });
+      vbox.querySelectorAll("iframe").forEach((f) => { try { f.src = f.src; } catch (e) { /* ignore */ } });
+    };
+    if (hasWidget) {
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver((es) => es.forEach((e) => { onScreen = e.isIntersecting; })).observe(vbox);
+      } else onScreen = true;
+      setInterval(refreshMap, REFRESH);
+      document.addEventListener("visibilitychange", () => { if (!document.hidden) refreshMap(); });   // also when you come back to the tab
+    }
   }
 })();
 
