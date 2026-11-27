@@ -143,47 +143,47 @@
     const html = items.slice(0, limit).map(row).join("");
     rail.innerHTML = html || '<li class="nr-item"><span class="nr-text">No news yet.</span></li>';
 
-    // Roll slowly to the last item, rest there, then fade back to the first item and start again.
+    // Rolls upwards without stopping. After the last item has scrolled off the top, the box stays
+    // empty for a moment and then the first item comes up again from the bottom.
     // Stops while the mouse / finger / keyboard is on it.
     const win = rail.closest(".nr-window");
-    const SPEED = 16;                       // pixels per second
-    const START_AFTER = 3500;               // rest at the top before rolling (milliseconds)
-    const REST_AT_END = 3000;               // rest at the bottom before going back to the top
-    let rolling = false, paused = false, waiting = true, last = 0, pos = 0;
-    const max = () => win.scrollHeight - win.clientHeight;
-    const restart = () => {
-      waiting = true;
-      setTimeout(() => {
-        rail.classList.add("nr-fade");            // fade out, jump to the top, fade in
-        setTimeout(() => {
-          pos = 0; win.scrollTop = 0; rail.classList.remove("nr-fade");
-          setTimeout(() => { waiting = false; }, START_AFTER);
-        }, 450);
-      }, REST_AT_END);
+    const SPEED = 30;                       // pixels per second (higher = faster)
+    const START_AFTER = 2500;               // wait before rolling starts (milliseconds)
+    let rolling = false, paused = false, last = 0, pos = 0, cycle = 0;
+    const measure = () => {
+      const gap = rail.querySelector(".nr-gap");
+      if (gap) gap.style.height = win.clientHeight + "px";      // blank space = one full box
+      const copy = rail.querySelector(".nr-copy");
+      cycle = copy ? copy.offsetTop - rail.firstElementChild.offsetTop : 0;
     };
     const setup = () => {
-      if (reduceMotion || !html || rolling || max() <= 8) return;
+      if (reduceMotion || !html || rolling || win.scrollHeight - win.clientHeight <= 8) return;
+      rail.insertAdjacentHTML("beforeend", '<li class="nr-gap" aria-hidden="true"></li>' +
+        html.replace(/<li class="nr-item">/g, '<li class="nr-item nr-copy" aria-hidden="true">'));
+      rail.querySelectorAll(".nr-copy a").forEach((a) => a.setAttribute("tabindex", "-1"));
+      measure();
       rolling = true; win.classList.add("is-rolling");
-      setTimeout(() => { waiting = false; }, START_AFTER);
-      requestAnimationFrame(step);
+      setTimeout(() => requestAnimationFrame(step), START_AFTER);
     };
     const step = (t) => {
-      if (last && !paused && !waiting && !document.hidden) {
+      if (last && !paused && !document.hidden && cycle) {
         pos += Math.min(t - last, 100) / 1000 * SPEED;
-        if (pos >= max()) { pos = max(); restart(); }
+        if (pos >= cycle) pos -= cycle;
         win.scrollTop = pos;
       }
       last = t;
       requestAnimationFrame(step);
     };
     const hold = () => { paused = true; };
-    const go = () => { paused = false; pos = win.scrollTop; };
+    const go = () => { paused = false; pos = cycle ? win.scrollTop % cycle : win.scrollTop; };
     win.addEventListener("mouseenter", hold);
     win.addEventListener("mouseleave", go);
     win.addEventListener("focusin", hold);
     win.addEventListener("focusout", go);
     win.addEventListener("touchstart", hold, { passive: true });
     win.addEventListener("touchend", () => setTimeout(go, 2500));
+    win.addEventListener("scroll", () => { if (paused && cycle && win.scrollTop >= cycle) win.scrollTop -= cycle; });
+    window.addEventListener("resize", () => { if (rolling) measure(); });
     if (document.readyState === "complete") setup(); else window.addEventListener("load", setup);
   }
 
