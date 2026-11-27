@@ -143,38 +143,47 @@
     const html = items.slice(0, limit).map(row).join("");
     rail.innerHTML = html || '<li class="nr-item"><span class="nr-text">No news yet.</span></li>';
 
-    // Roll slowly when the list is taller than its box; stop while the mouse / finger / keyboard is on it.
+    // Roll slowly to the last item, rest there, then fade back to the first item and start again.
+    // Stops while the mouse / finger / keyboard is on it.
     const win = rail.closest(".nr-window");
     const SPEED = 16;                       // pixels per second
-    const START_AFTER = 3500;               // wait before rolling starts (milliseconds)
-    let rolling = false, paused = false, last = 0, pos = 0, half = 0;
+    const START_AFTER = 3500;               // rest at the top before rolling (milliseconds)
+    const REST_AT_END = 3000;               // rest at the bottom before going back to the top
+    let rolling = false, paused = false, waiting = true, last = 0, pos = 0;
+    const max = () => win.scrollHeight - win.clientHeight;
+    const restart = () => {
+      waiting = true;
+      setTimeout(() => {
+        rail.classList.add("nr-fade");            // fade out, jump to the top, fade in
+        setTimeout(() => {
+          pos = 0; win.scrollTop = 0; rail.classList.remove("nr-fade");
+          setTimeout(() => { waiting = false; }, START_AFTER);
+        }, 450);
+      }, REST_AT_END);
+    };
     const setup = () => {
-      const overflow = win.scrollHeight - win.clientHeight > 8;
-      if (reduceMotion || !overflow || !html || rolling) return;
-      rail.insertAdjacentHTML("beforeend", html.replace(/<li class="nr-item">/g, '<li class="nr-item nr-copy" aria-hidden="true">'));
-      rail.querySelectorAll(".nr-copy a").forEach((a) => a.setAttribute("tabindex", "-1"));
-      half = rail.scrollHeight / 2;
+      if (reduceMotion || !html || rolling || max() <= 8) return;
       rolling = true; win.classList.add("is-rolling");
-      setTimeout(() => requestAnimationFrame(step), START_AFTER);
+      setTimeout(() => { waiting = false; }, START_AFTER);
+      requestAnimationFrame(step);
     };
     const step = (t) => {
-      if (last && !paused && !document.hidden) {
+      if (last && !paused && !waiting && !document.hidden) {
         pos += Math.min(t - last, 100) / 1000 * SPEED;
-        if (pos >= half) pos -= half;
+        if (pos >= max()) { pos = max(); restart(); }
         win.scrollTop = pos;
       }
       last = t;
       requestAnimationFrame(step);
     };
     const hold = () => { paused = true; };
-    const go = () => { paused = false; pos = win.scrollTop % (half || 1); };
+    const go = () => { paused = false; pos = win.scrollTop; };
     win.addEventListener("mouseenter", hold);
     win.addEventListener("mouseleave", go);
     win.addEventListener("focusin", hold);
     win.addEventListener("focusout", go);
     win.addEventListener("touchstart", hold, { passive: true });
     win.addEventListener("touchend", () => setTimeout(go, 2500));
-    win.addEventListener("scroll", () => { if (paused && half && win.scrollTop >= half) win.scrollTop -= half; });
     if (document.readyState === "complete") setup(); else window.addEventListener("load", setup);
   }
 

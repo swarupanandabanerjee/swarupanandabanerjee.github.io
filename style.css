@@ -1241,3 +1241,7 @@ html.search-open { overflow: hidden; }
 :root:not([data-theme="dark"]) .topbar { background: linear-gradient(180deg, rgba(242, 246, 252, .96), rgba(233, 240, 250, .96)); border-bottom-color: #d6e1f1; }
 :root:not([data-theme="dark"]) .topbar .icon-btn { background: #fff; }
 :root:not([data-theme="dark"]) .topbar .nav-glide { background: #fff; box-shadow: 0 1px 4px rgba(29, 79, 145, .12); }
+
+/* News column: soft fade when it goes back to the first item */
+.nr-list { transition: opacity .45s ease; }
+.nr-list.nr-fade { opacity: 0; }
