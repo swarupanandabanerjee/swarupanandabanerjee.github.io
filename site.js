@@ -63,7 +63,7 @@ const SITE = {
 
   // Top menu. "file" must match the page's file name exactly.
   menu: [
-    { label: "Home",         file: "index.html" },
+    { label: "Home",         file: "index.html", icon: "home" },   // icon: shows a house logo instead of the word
     { label: "Research",     file: "research.html" },
     { label: "Experience",   file: "experience.html" },
     { label: "Achievements", file: "achievements.html" },
@@ -101,6 +101,7 @@ const SITE = {
     youtube: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M21.6 7.6a2.6 2.6 0 0 0-1.8-1.8C18.2 5.4 12 5.4 12 5.4s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8C2 9.2 2 12 2 12s0 2.8.4 4.4a2.6 2.6 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.6.4-4.4.4-4.4s0-2.8-.4-4.4ZM10 15.1V8.9l5.3 3.1L10 15.1Z"/></svg>'
   };
   const ICONS = {
+    home: '<svg class="nav-home-ico" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.6 12 3.8l8.5 6.8"/><path d="M5.8 9v10.2a1 1 0 0 0 1 1h3.7v-5.6h3v5.6h3.7a1 1 0 0 0 1-1V9"/></svg>',
     search: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.3-4.3"/></svg>',
     access: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="7.2" r="1.3" fill="currentColor" stroke="none"/><path d="M7.5 10.2 12 11l4.5-.8M12 11v3.2m0 0-2.2 4m2.2-4 2.2 4"/></svg>',
     up: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
@@ -133,7 +134,10 @@ const SITE = {
     const items = SITE.menu.map((m) => {
       const parent = ((SITE.subpages || {})[current] || "").toLowerCase();
       const active = m.file.toLowerCase() === current || m.file.toLowerCase() === parent;
-      return `<li><a href="${esc(m.file)}"${active ? ' class="active" aria-current="page"' : ""}>${esc(m.label)}</a></li>`;
+      const inner = m.icon === "home"
+        ? `${ICONS.home}<span class="nav-home-label">${esc(m.label)}</span>`
+        : esc(m.label);
+      return `<li><a href="${esc(m.file)}"${m.icon ? ` class="nav-icon${active ? " active" : ""}" aria-label="${esc(m.label)}" title="${esc(m.label)}"` : (active ? ' class="active"' : "")}${active ? ' aria-current="page"' : ""}>${inner}</a></li>`;
     }).join("");
     header.className = "topbar";
     header.innerHTML = `
