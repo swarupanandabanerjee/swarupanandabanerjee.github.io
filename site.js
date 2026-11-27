@@ -57,7 +57,6 @@ const SITE = {
     { label: "Achievements", file: "achievements.html" },
     { label: "Teaching",     file: "teaching.html" },
     { label: "Talks",        file: "talks.html" },
-    { label: "CV",           file: "cv.html" },
     { label: "Life & Beyond", file: "life.html" }
   ]
 };

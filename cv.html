@@ -81,7 +81,7 @@ window.MathJax = {
   @page { size: A4; margin: 13mm 14mm 16mm; }
   html, body { background: #fff !important; color: #111 !important; }
   :root, [data-theme="dark"] { --text: #111; --muted: #555; --accent: #1d4f91; --border: #d6dbe3; --surface: #fff; --surface-2: #fff; --accent-soft: #fff; }
-  #site-header, #site-sidebar, #site-footer, .skip-link, .page-header, .cv-actions, .cv-dialog, .cv-screen-only { display: none !important; }
+  #site-header, #site-sidebar, #site-footer, .skip-link, .page-header, .page-band, .cv-actions, .cv-dialog, .cv-screen-only { display: none !important; }
   .layout { display: block !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
   .main { width: 100% !important; }
   body { font-size: 10pt; line-height: 1.4; }
@@ -123,31 +123,32 @@ window.MathJax = {
   <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
 </header>
 
+<!-- PAGE TITLE BAND (title on the left) -->
+<section class="page-band pb-plain" aria-label="Page title">
+  <div class="pb-inner">
+    <div class="pb-title">
+      <h1>Curriculum Vitae</h1>
+    </div>
+  </div>
+</section>
+
 <div class="layout">
   <!-- Left sidebar (photo, name, links): built automatically from site.js -->
   <aside id="site-sidebar" aria-label="Profile"></aside>
 
   <main id="main" class="main">
 
-    <div class="page-header">
-      <h1>Curriculum Vitae</h1>
-      <p class="lead">A summary of my academic profile. The complete CV (PDF) is shared on request.</p>
-    </div>
-
     <!-- ✏️ CV ACTIONS
          "Request CV" opens a short form and then sends the visitor to your Google Drive file,
          where Google asks them to "Request access". You approve from the email Google sends you.
          To change the Drive file, replace the link in data-drive="…" below.
          Keep the Drive file's General access set to "Restricted". -->
-    <section class="card cv-actions">
-      <div class="btn-row">
-        <button type="button" class="btn" id="cv-request-btn" data-drive="https://drive.google.com/file/d/1gmLklRazrp7TqmoqoZxENN2V_OLYvdfL/view"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Request CV</button>
-        <button type="button" class="btn outline" id="cv-print-btn"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print CV</button>
-      </div>
-      <p class="cv-note">The full CV is shared on request: submit your email and a short reason, and you'll get access once I approve it. <span class="nowrap">Print CV</span> prints the profile summary below.</p>
-    </section>
+    <div class="cv-actions">
+      <button type="button" class="btn" id="cv-request-btn" data-drive="https://drive.google.com/file/d/1gmLklRazrp7TqmoqoZxENN2V_OLYvdfL/view"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>Request CV</button>
+      <button type="button" class="btn outline" id="cv-print-btn"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/></svg>Print Profile Summary</button>
+    </div>
 
-    <!-- ✏️ EVERYTHING BELOW is the profile summary shown on this page and printed by "Print CV". -->
+    <!-- ✏️ EVERYTHING BELOW is the profile summary shown on this page and printed by "Print Profile Summary". -->
     <section class="card cv-id-card">
       <div class="cv-id">
         <div>

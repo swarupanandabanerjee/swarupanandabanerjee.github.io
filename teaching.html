@@ -49,16 +49,23 @@ window.MathJax = {
   <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
 </header>
 
+<!-- PAGE TITLE BAND (title on the left, verse on the right) -->
+<section class="page-band" aria-label="Page title">
+  <div class="pb-inner">
+    <div class="pb-title">
+      <h1>Teaching</h1>
+    </div>
+    <!-- ✏️ The verse is written in quote.js (entry "gita-3-20"). Change the name to pick another verse; delete this line for none. -->
+    <div class="pb-verse" data-verse="gita-3-20"></div>
+  </div>
+</section>
+
 <div class="layout">
   <!-- Left sidebar (photo, name, links): built automatically from site.js -->
   <aside id="site-sidebar" aria-label="Profile"></aside>
 
   <main id="main" class="main">
 
-    <div class="page-header">
-      <h1>Teaching</h1>
-      <p class="lead">Teaching assistantships at IIT Kharagpur and in NPTEL online courses.</p>
-    </div>
 
     <!-- ✏️ IIT KHARAGPUR: each <li class="entry edu"> … </li> is one course (newest at the top).
          To add one, copy a whole block from <li class="entry edu"> to its </li> and edit the
@@ -111,5 +118,6 @@ window.MathJax = {
 <!-- Footer: built automatically from site.js -->
 <footer id="site-footer"></footer>
 <script src="site.js"></script>
+<script src="quote.js"></script>
 </body>
 </html>

@@ -882,3 +882,89 @@ a.nr-link:hover .nr-text { color: var(--accent); }
   .entries.m-tl .entry::before { transform: none !important; animation: none !important; }
   .read-progress { display: none; }
 }
+
+/* =====================================================================
+   15. Title band at the top of inner pages: page title, the verse
+   (text lives in quote.js) and the chariot sketch fading in on the right.
+   ===================================================================== */
+.page-band {
+  --pb-ink: #1f3a63; --pb-soft: #4b5a70; --pb-gold: #b8893b;
+  position: relative; overflow: hidden; isolation: isolate;
+  border-bottom: 1px solid var(--border);
+  background:
+    radial-gradient(ellipse 45% 80% at 52% 40%, rgba(255, 236, 200, .55), transparent 70%),
+    linear-gradient(100deg, #f8f5ee 0%, #f4f1ea 45%, #e8eef6 100%);
+}
+.page-band::after {   /* the chariot sketch, melting into the band */
+  content: ""; position: absolute; z-index: -1; top: -4%; bottom: -10%; right: 0; width: min(31%, 500px);
+  background: url("gita-chariot-sketch.jpg") right center / cover no-repeat;
+  mix-blend-mode: multiply; opacity: .62;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 38%), linear-gradient(to bottom, #000 70%, transparent);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+          mask-image: linear-gradient(to right, transparent 0%, #000 38%), linear-gradient(to bottom, #000 70%, transparent);
+}
+[data-theme="dark"] .page-band {
+  --pb-ink: #f1e9d6; --pb-soft: #b9c3d3; --pb-gold: #d1a65a;
+  background:
+    radial-gradient(ellipse 45% 80% at 52% 40%, rgba(209, 166, 90, .08), transparent 70%),
+    linear-gradient(100deg, #121a26 0%, #131c29 55%, #172235 100%);
+}
+[data-theme="dark"] .page-band::after { filter: invert(1) hue-rotate(180deg); mix-blend-mode: screen; opacity: .34; }
+.pb-inner {
+  position: relative; max-width: 1200px; margin: 0 auto; padding: 30px 20px 32px;
+  display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.55fr) minmax(0, .85fr); gap: 28px; align-items: center;
+}
+.page-band.pb-plain .pb-inner { grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); padding: 38px 20px 40px; }
+.pb-title h1 { font-size: 2.4rem; margin: 0; line-height: 1.15; letter-spacing: -.01em; }
+.pb-title h1::after {   /* small gold flourish under the title (same as the Home divider) */
+  content: ""; display: block; width: 96px; height: 10px; margin-top: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='10' viewBox='0 0 96 10'%3E%3Cdefs%3E%3ClinearGradient id='a'%3E%3Cstop offset='0' stop-color='%23b8893b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23b8893b'/%3E%3C/linearGradient%3E%3ClinearGradient id='b'%3E%3Cstop offset='0' stop-color='%23b8893b'/%3E%3Cstop offset='1' stop-color='%23b8893b' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='4.5' width='38.0' height='1' fill='url(%23a)'/%3E%3Crect x='58.0' y='4.5' width='38.0' height='1' fill='url(%23b)'/%3E%3Crect x='45.0' y='2' width='6' height='6' fill='none' stroke='%23b8893b' stroke-width='1.3' transform='rotate(45 48.0 5)'/%3E%3C/svg%3E") no-repeat;
+}
+[data-theme="dark"] .pb-title h1::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='10' viewBox='0 0 96 10'%3E%3Cdefs%3E%3ClinearGradient id='a'%3E%3Cstop offset='0' stop-color='%23d1a65a' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23d1a65a'/%3E%3C/linearGradient%3E%3ClinearGradient id='b'%3E%3Cstop offset='0' stop-color='%23d1a65a'/%3E%3Cstop offset='1' stop-color='%23d1a65a' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='4.5' width='38.0' height='1' fill='url(%23a)'/%3E%3Crect x='58.0' y='4.5' width='38.0' height='1' fill='url(%23b)'/%3E%3Crect x='45.0' y='2' width='6' height='6' fill='none' stroke='%23d1a65a' stroke-width='1.3' transform='rotate(45 48.0 5)'/%3E%3C/svg%3E"); }
+.pb-title .back-link, .pb-title .crumbs { margin: 0 0 8px !important; }
+.pb-verse { text-align: center; }
+.pbv { margin: 0; }
+.pbv-verse {
+  margin: 0; color: var(--pb-ink); font-size: 1.28rem; line-height: 1.75;
+  font-family: "Noto Sans Devanagari", "Nirmala UI", "Kohinoor Devanagari", "Devanagari Sangam MN", Mangal, sans-serif;
+}
+.pbv-verse .qb-line, .pbv-translit .qb-line { display: block; }
+.pbv-translit { margin: 4px 0 0; color: var(--pb-soft); font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.04rem; line-height: 1.45; }
+.pbv-meaning { margin: 0 auto; max-width: 560px; color: var(--pb-soft); font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.1rem; line-height: 1.45; }
+.pbv-meaning::before {   /* gold divider between transliteration and meaning, as on Home */
+  content: ""; display: block; width: 150px; height: 10px; margin: 10px auto 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='10' viewBox='0 0 150 10'%3E%3Cdefs%3E%3ClinearGradient id='a'%3E%3Cstop offset='0' stop-color='%23b8893b' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23b8893b'/%3E%3C/linearGradient%3E%3ClinearGradient id='b'%3E%3Cstop offset='0' stop-color='%23b8893b'/%3E%3Cstop offset='1' stop-color='%23b8893b' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='4.5' width='65.0' height='1' fill='url(%23a)'/%3E%3Crect x='85.0' y='4.5' width='65.0' height='1' fill='url(%23b)'/%3E%3Crect x='72.0' y='2' width='6' height='6' fill='none' stroke='%23b8893b' stroke-width='1.3' transform='rotate(45 75.0 5)'/%3E%3C/svg%3E") no-repeat;
+}
+[data-theme="dark"] .pbv-meaning::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='10' viewBox='0 0 150 10'%3E%3Cdefs%3E%3ClinearGradient id='a'%3E%3Cstop offset='0' stop-color='%23d1a65a' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23d1a65a'/%3E%3C/linearGradient%3E%3ClinearGradient id='b'%3E%3Cstop offset='0' stop-color='%23d1a65a'/%3E%3Cstop offset='1' stop-color='%23d1a65a' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='0' y='4.5' width='65.0' height='1' fill='url(%23a)'/%3E%3Crect x='85.0' y='4.5' width='65.0' height='1' fill='url(%23b)'/%3E%3Crect x='72.0' y='2' width='6' height='6' fill='none' stroke='%23d1a65a' stroke-width='1.3' transform='rotate(45 75.0 5)'/%3E%3C/svg%3E"); }
+.pbv-ref { margin: 8px 0 0; font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; }
+.pbv-ref, .pbv-ref a { color: var(--pb-gold); }
+.pbv-ref a:hover { text-decoration: none; border-bottom: 1px dotted currentColor; }
+/* gentle entrance */
+.pb-title, .pbv > * { animation: qb-in .9s cubic-bezier(.2, .7, .2, 1) both; }
+.pbv > :nth-child(1) { animation-delay: .1s; } .pbv > :nth-child(2) { animation-delay: .25s; }
+.pbv > :nth-child(3) { animation-delay: .4s; } .pbv > :nth-child(4) { animation-delay: .55s; }
+.page-band::after { animation: pb-art-in 1.4s ease both; }
+@keyframes pb-art-in { from { opacity: 0; transform: translateX(14px); } }
+@keyframes qb-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (max-width: 1100px) {
+  .pb-inner { grid-template-columns: minmax(0, .8fr) minmax(0, 1.6fr); }
+  .page-band::after { width: 30%; opacity: .32; }
+}
+@media (max-width: 860px) {
+  .pb-inner, .page-band.pb-plain .pb-inner { grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 24px 18px 26px; }
+  .pb-title h1 { font-size: 2rem; }
+  .pbv-verse { font-size: 1.08rem; }
+  .page-band::after { width: 70%; opacity: .16; top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .pb-title, .pbv > *, .page-band::after { animation: none; } }
+@media print { .page-band { background: none; border: 0; } .page-band::after, .pb-verse, .pb-title h1::after { display: none; } .pb-inner { padding: 0 0 12px; } }
+
+/* Phones: the compact profile strip keeps a small "View CV" button (CV is not in the top menu) */
+@media (max-width: 980px) {
+  .sidebar.compact .cv-btn { display: inline-flex; grid-column: 1 / -1; justify-self: start; width: auto; margin-top: 10px; padding: 6px 14px; font-size: .88rem; }
+}
+
+/* CV page: "Request CV" and "Print Profile Summary" on the right, just under the title band (no box) */
+.cv-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; margin: 0 0 16px; }
+.cv-actions .btn.outline { background: var(--surface); }
+@media (max-width: 560px) { .cv-actions { justify-content: flex-start; } }
