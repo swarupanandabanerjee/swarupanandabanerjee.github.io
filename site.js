@@ -42,11 +42,16 @@ const SITE = {
     { label: "Gmail",          icon: "gmail",    url: "mailto:sbmathrkmveri@gmail.com" }
   ],
 
+  // Sub-pages: not shown in the top menu, but they highlight their parent menu item.
+  // Format:  "subpage.html": "parent.html"
+  subpages: {
+    "publications.html": "research.html"
+  },
+
   // Top menu. "file" must match the page's file name exactly.
   menu: [
     { label: "About",        file: "index.html" },
     { label: "Research",     file: "research.html" },
-    { label: "Publications", file: "publications.html" },
     { label: "Education",    file: "education.html" },
     { label: "Experience",   file: "experience.html" },
     { label: "Achievements", file: "achievements.html" },
@@ -91,7 +96,8 @@ const SITE = {
   const header = document.getElementById("site-header");
   if (header) {
     const items = SITE.menu.map((m) => {
-      const active = m.file.toLowerCase() === current;
+      const parent = ((SITE.subpages || {})[current] || "").toLowerCase();
+      const active = m.file.toLowerCase() === current || m.file.toLowerCase() === parent;
       return `<li><a href="${esc(m.file)}"${active ? ' class="active" aria-current="page"' : ""}>${esc(m.label)}</a></li>`;
     }).join("");
     header.className = "topbar";
