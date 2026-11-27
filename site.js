@@ -18,7 +18,7 @@ const SITE = {
   ],
   affiliationUrl: "https://www.iitkgp.ac.in/department/MA",
 
-  // Advisors shown in the sidebar (on every page except About).
+  // Advisors shown in the sidebar (on every page except Home).
   // To add/remove one, copy/delete a line.
   advisors: [
     { name: "Prof. Hari Shankar Mahato", url: "https://www.iitkgp.ac.in/department/MA/faculty/ma-hsmahato" },
@@ -50,7 +50,7 @@ const SITE = {
 
   // Top menu. "file" must match the page's file name exactly.
   menu: [
-    { label: "About",        file: "index.html" },
+    { label: "Home",         file: "index.html" },
     { label: "Research",     file: "research.html" },
     { label: "Education",    file: "education.html" },
     { label: "Experience",   file: "experience.html" },

@@ -93,13 +93,19 @@ window.MathJax = {
 
 <!-- Top menu bar: built automatically from site.js -->
 <header id="site-header">
-  <noscript><nav style="padding:12px 20px"><a href="index.html">About</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
+  <noscript><nav style="padding:12px 20px"><a href="index.html">Home</a> · <a href="research.html">Research</a> · <a href="publications.html">Publications</a> · <a href="talks.html">Talks</a> · <a href="teaching.html">Teaching</a> · <a href="cv.html">CV</a> · <a href="contact.html">Contact</a></nav></noscript>
 </header>
+
+<!-- ================================================================
+     QUOTATION BANNER — shown at the very top of the Home page (text and pictures are set in quote.js)
+     ✏️ To use another quotation, change "gita-9-34"; to hide it, delete this line.
+     ================================================================ -->
+<section class="quote-banner" data-quote="gita-9-34"></section>
 
 <div class="layout home-layout">
 
-  <!-- LEFT: photos + "Latest" banner. This column stays fixed while the right side scrolls. -->
-  <aside class="home-aside" aria-label="Photos and latest update">
+  <!-- LEFT: photos. This column stays fixed while the middle column scrolls. -->
+  <aside class="home-aside" aria-label="Photos">
 
     <div class="slider" data-slider data-auto-photos="image-" data-auto-max="12" aria-roledescription="carousel" aria-label="Photos">
       <div class="slides">
@@ -119,20 +125,12 @@ window.MathJax = {
       <button class="slider-btn slider-next" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
       <div class="slider-dots" role="tablist" aria-label="Choose photo"></div>
     </div>
-
-    <!-- Announcement banner (megaphone icon): filled automatically with the newest item in news.js -->
-    <a class="ticker" id="ticker" href="news.html">
-      <span class="ticker-label" title="Announcement" style="padding:0 16px"><svg viewBox="0 0 24 24" aria-hidden="true" style="width:24px;height:24px"><path fill="currentColor" d="M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z"/></svg></span>
-      <span class="ticker-window"><span class="ticker-move"></span></span>
-    </a>
   </aside>
 
   <main id="main" class="main">
 
-    <div class="page-header">
-      <h1>About me</h1>
-      <p class="lead">PhD research scholar in applied mathematics at IIT Kharagpur, working on the analysis of PDE models for biological and porous media.</p>
-    </div>
+    <!-- Page title for search engines and screen readers only (not shown on screen) -->
+    <h1 class="sr-only">Swarupananda Banerjee</h1>
 
     <!-- ✏️ BIOGRAPHY: edit the paragraphs below freely. -->
     <section class="card">
@@ -149,39 +147,35 @@ window.MathJax = {
 
     <section class="card">
       <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Research interests</h2>
-      <!-- ✏️ Add or remove interests: copy/delete a whole <li>…</li> line. -->
-      <ul class="tags">
-        <li><span class="tag">Homogenization theory</span></li>
-        <li><span class="tag">Partial differential equations</span></li>
-        <li><span class="tag">Well-posedness &amp; weak solutions</span></li>
-        <li><span class="tag">Multiscale analysis</span></li>
-        <li><span class="tag">Biphasic mixture models</span></li>
-        <li><span class="tag">Visco-morphoelasticity</span></li>
-        <li><span class="tag">Mathematical biology</span></li>
-        <li><span class="tag">Tissue engineering</span></li>
-        <li><span class="tag">Porous media</span></li>
-      </ul>
-    </section>
-
-    <section class="card" id="news">
-      <div class="card-head">
-        <h2 class="card-title"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h13v14H6a2 2 0 0 1-2-2V5Z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg>News &amp; Updates</h2>
-        <a class="view-all" href="news.html">View all<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+      <!-- ✏️ Research interests: each box is one <a class="ri">…</a> block.
+           sym = the small formula (LaTeX between $ … $), lbl = the name, href = where the box opens.
+           "ri-wide" boxes are the two wide ones on the first row; the other three share the second row. -->
+      <div class="ri-grid">
+        <a class="ri ri-wide" href="research.html"><span class="ri-sym">$\rho \left(\frac{\partial \mathbf{u}}{\partial t}+(\mathbf{u}\cdot \nabla )\mathbf{u}\right)=\nabla \cdot \boldsymbol{\sigma }+\mathbf{f}$</span><span class="ri-lbl">Mathematical modelling</span></a>
+        <a class="ri ri-wide" href="research.html"><span class="ri-sym">$\rho \left(\frac{\partial \mathbf{u}}{\partial t}+(\mathbf{u}\cdot \nabla )\mathbf{u}\right)=-\nabla p+\mu \nabla ^{2}\mathbf{u}+\mathbf{f}$</span><span class="ri-lbl">Applied analysis</span></a>
+        <a class="ri" href="research.html#biphasic"><span class="ri-sym">$\phi_s + \phi_f = 1$</span><span class="ri-lbl">Biphasic mixture models</span></a>
+        <a class="ri" href="research.html#visco-morphoelastic"><span class="ri-sym">$\mathbf{F} = \mathbf{F}_e\,\mathbf{F}_g$</span><span class="ri-lbl">Visco-morphoelasticity</span></a>
+        <a class="ri" href="research.html#homogenization"><span class="ri-sym">$\varepsilon \to 0$</span><span class="ri-lbl">Homogenization theory</span></a>
       </div>
-      <!-- ✏️ News items are written in news.js (not here). The 5 newest are shown. -->
-      <ul class="news" data-news="5">
-        <li><span class="date">Oct 2026</span><span>New preprint on arXiv. <a href="news.html">See all news</a>.</span></li>
-      </ul>
     </section>
 
   </main>
+
+  <!-- RIGHT: News & Updates. Items are written in news.js (not here); the 8 newest are shown.
+       The list rolls slowly by itself when it is longer than the box, and stops while the mouse is on it. -->
+  <aside class="news-rail" id="news" aria-labelledby="news-rail-title">
+    <div class="nr-head">
+      <h2 id="news-rail-title"><span class="nr-live" aria-hidden="true"></span>News &amp; Updates</h2>
+      <a class="view-all" href="news.html">View all<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>
+    </div>
+    <div class="nr-window" tabindex="0" aria-label="Latest news, scrollable">
+      <ul class="nr-list" data-news-rail="8">
+        <li class="nr-item"><span class="nr-text">New preprint on arXiv. <a href="news.html">See all news</a>.</span></li>
+      </ul>
+    </div>
+  </aside>
 </div>
 
-<!-- ================================================================
-     QUOTATION BANNER (text and pictures are set in quote.js)
-     ✏️ To use another quotation, change "gita-9-34"; to hide it, delete this line.
-     ================================================================ -->
-<section class="quote-banner" data-quote="gita-9-34"></section>
 
 <!-- ================================================================
      CONTACT, PROFILES & VISITORS block at the bottom of the Home page

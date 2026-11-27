@@ -1,6 +1,6 @@
 /* =====================================================================
-   Home page + News page behaviour: photo slider, "Latest" banner,
-   News & Updates lists and the visitor box.
+   Home page + News page behaviour: photo slider, the rolling
+   News & Updates column, the full News list and the visitor box.
    You normally don't need to edit this file:
      • photos are listed in index.html  (search for ✏️ PHOTOS)
      • news items are listed in news.js
@@ -95,53 +95,113 @@
     if (prefix) probe(2, 0);
   }
 
-  /* ---------------- 2. "Latest" moving banner ---------------- */
-  const ticker = document.getElementById("ticker");
-  if (ticker && items.length) {
-    const pick = items.find((n) => n.ticker) || items[0];
-    const text = `${pick.date} — ${plain(pick.text)}`;
-    if (pick.link) {
-      ticker.href = pick.link;
-      if (isExternal(pick.link)) { ticker.target = "_blank"; ticker.rel = "noopener"; }
-    } else {
-      ticker.removeAttribute("href");
-    }
-    ticker.setAttribute("aria-label", `Latest update: ${text}`);
-    ticker.title = text;
-    const move = ticker.querySelector(".ticker-move");
-    const unit = `<span class="ticker-item">${escAttr(text)}<span class="ticker-sep" aria-hidden="true">•</span></span>`;
-    move.innerHTML = unit + unit;           // two copies → seamless loop
-    // Constant reading speed whatever the text length (~55 px per second)
-    requestAnimationFrame(() => {
-      const w = move.scrollWidth / 2;
-      move.style.animationDuration = `${Math.max(10, w / 55)}s`;
-      ticker.classList.add("ready");
-    });
-  } else if (ticker) {
-    ticker.hidden = true;
+  /* ---------------- 2. Shared helpers for news items ---------------- */
+  // Icons and labels for the "type" field in news.js
+  const SVG = (d) => `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const TYPES = {
+    preprint:  ["Preprint",  SVG('<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>')],
+    paper:     ["Paper",     SVG('<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>')],
+    talk:      ["Talk",      SVG('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>')],
+    workshop:  ["Workshop",  SVG('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/>')],
+    teaching:  ["Teaching",  SVG('<path d="m2 9 10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/>')],
+    position:  ["Position",  SVG('<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>')],
+    award:     ["Award",     SVG('<circle cx="12" cy="9" r="5"/><path d="m8.5 13.5-1.5 7.5 5-3 5 3-1.5-7.5"/>')],
+    milestone: ["Milestone", SVG('<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>')]
+  };
+  const GUESS = { "publications.html": "paper", "talks.html": "talk", "teaching.html": "teaching", "cv.html": "position", "research.html": "milestone" };
+  const typeOf = (n) => (TYPES[n.type] ? n.type : GUESS[n.link] || "milestone");
+
+  // "Oct 2026" → months since then (0 = this month)
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const today = new Date();
+  const monthsAgo = (date) => {
+    const m = String(date).toLowerCase().match(/([a-z]{3})[a-z]*\.?\s+(\d{4})/);
+    if (!m || MONTHS.indexOf(m[1]) < 0) return null;
+    return (today.getFullYear() - +m[2]) * 12 + today.getMonth() - MONTHS.indexOf(m[1]);
+  };
+  const relative = (date) => {
+    const a = monthsAgo(date);
+    if (a === null || a < 0 || a >= 12) return date;
+    return a === 0 ? "This month" : a === 1 ? "Last month" : `${a} months ago`;
+  };
+  const isNew = (date) => { const a = monthsAgo(date); return a !== null && a >= 0 && a <= 1; };
+  const linkAttrs = (n) => (n.link ? ` href="${escAttr(n.link)}"${isExternal(n.link) ? ' target="_blank" rel="noopener"' : ""}` : "");
+
+  /* ---------------- 3. Home page: rolling News & Updates column ---------------- */
+  const rail = document.querySelector("[data-news-rail]");
+  if (rail) {
+    const limit = parseInt(rail.getAttribute("data-news-rail"), 10) || 8;
+    const row = (n) => {
+      const t = typeOf(n), [label, icon] = TYPES[t];
+      const tag = n.link ? "a" : "div";
+      return `<li class="nr-item"><${tag} class="nr-link"${linkAttrs(n)}>` +
+        `<span class="nr-ico t-${t}">${icon}</span>` +
+        `<span class="nr-body"><span class="nr-meta">${isNew(n.date) ? '<span class="nr-new">New</span>' : ""}` +
+        `<span class="nr-cat">${label}</span><span aria-hidden="true">·</span><time title="${escAttr(n.date)}">${escAttr(relative(n.date))}</time></span>` +
+        `<span class="nr-text">${n.text}</span></span></${tag}></li>`;
+    };
+    const html = items.slice(0, limit).map(row).join("");
+    rail.innerHTML = html || '<li class="nr-item"><span class="nr-text">No news yet.</span></li>';
+
+    // Roll slowly when the list is taller than its box; stop while the mouse / finger / keyboard is on it.
+    const win = rail.closest(".nr-window");
+    const SPEED = 16;                       // pixels per second
+    const START_AFTER = 3500;               // wait before rolling starts (milliseconds)
+    let rolling = false, paused = false, last = 0, pos = 0, half = 0;
+    const setup = () => {
+      const overflow = win.scrollHeight - win.clientHeight > 8;
+      if (reduceMotion || !overflow || !html || rolling) return;
+      rail.insertAdjacentHTML("beforeend", html.replace(/<li class="nr-item">/g, '<li class="nr-item nr-copy" aria-hidden="true">'));
+      rail.querySelectorAll(".nr-copy a").forEach((a) => a.setAttribute("tabindex", "-1"));
+      half = rail.scrollHeight / 2;
+      rolling = true; win.classList.add("is-rolling");
+      setTimeout(() => requestAnimationFrame(step), START_AFTER);
+    };
+    const step = (t) => {
+      if (last && !paused && !document.hidden) {
+        pos += Math.min(t - last, 100) / 1000 * SPEED;
+        if (pos >= half) pos -= half;
+        win.scrollTop = pos;
+      }
+      last = t;
+      requestAnimationFrame(step);
+    };
+    const hold = () => { paused = true; };
+    const go = () => { paused = false; pos = win.scrollTop % (half || 1); };
+    win.addEventListener("mouseenter", hold);
+    win.addEventListener("mouseleave", go);
+    win.addEventListener("focusin", hold);
+    win.addEventListener("focusout", go);
+    win.addEventListener("touchstart", hold, { passive: true });
+    win.addEventListener("touchend", () => setTimeout(go, 2500));
+    win.addEventListener("scroll", () => { if (paused && half && win.scrollTop >= half) win.scrollTop -= half; });
+    if (document.readyState === "complete") setup(); else window.addEventListener("load", setup);
   }
 
-  /* ---------------- 3. News & Updates lists ---------------- */
+  /* ---------------- 4. News page: full list grouped by year ---------------- */
   document.querySelectorAll("[data-news]").forEach((list) => {
     const limit = parseInt(list.getAttribute("data-news"), 10) || items.length;
     const byYear = list.hasAttribute("data-group-by-year");
-    let html = "", lastYear = null;
+    let html = "", lastYear = null, k = 0;
     items.slice(0, limit).forEach((n, i) => {
       const year = (String(n.date).match(/\d{4}/) || [""])[0];
-      if (byYear && year !== lastYear) { html += `<li class="news-year" aria-hidden="false"><span>${escAttr(year)}</span></li>`; lastYear = year; }
+      if (byYear && year !== lastYear) { html += `<li class="news-year" style="--i:${k++}"><span>${escAttr(year)}</span></li>`; lastYear = year; }
+      const t = typeOf(n), [label, icon] = TYPES[t];
       const live = i === 0 ? `<span class="live-badge" title="Most recent update"><span class="live-dot" aria-hidden="true"></span>Latest</span>` : "";
-      const ext = n.link && isExternal(n.link) ? ' target="_blank" rel="noopener"' : "";
       const body = n.link
-        ? `<a class="news-text" href="${escAttr(n.link)}"${ext}>${n.text}</a>`
+        ? `<a class="news-text"${linkAttrs(n)}>${n.text}</a>`
         : `<span class="news-text">${n.text}</span>`;
-      html += `<li class="news-item${i === 0 ? " is-latest" : ""}"><span class="date">${escAttr(n.date)}</span><span class="news-body">${live}${body}</span></li>`;
+      html += `<li class="news-item${i === 0 ? " is-latest" : ""}" style="--i:${k++}"><span class="date">${escAttr(n.date)}</span>` +
+        `<span class="news-ico t-${t}" title="${label}">${icon}</span>` +
+        `<span class="news-body"><span class="news-cat">${label}</span>${live}${body}</span></li>`;
     });
     list.innerHTML = html;
+    list.classList.add("is-animated");
   });
   const countEl = document.getElementById("news-count");
   if (countEl) countEl.textContent = String(items.length);
 
-  /* ---------------- 4. Visitor box ---------------- */
+  /* ---------------- 5. Visitor box ---------------- */
   // Shows the "setup pending" placeholder until the ClustrMaps code is pasted in index.html.
   const vbox = document.querySelector("[data-visitor-slot]");
   if (vbox) {

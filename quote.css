@@ -84,3 +84,24 @@
   .qb-divider span { width: 40px; }
 }
 @media print { .quote-banner { display: none !important; } }
+
+/* Gentle entrance: picture and lines fade up one after another */
+.qb-verse, .qb-translit, .qb-divider, .qb-translation, .qb-attribution { animation: qb-in .9s cubic-bezier(.2, .7, .2, 1) both; }
+/* the picture itself is animated (not its box), so its paper colour keeps melting into the banner */
+.qb-art img { animation: qb-art-in 1.3s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes qb-art-in { from { opacity: 0; transform: translateY(12px); } }
+.qb-verse { animation-delay: .15s; }
+.qb-translit { animation-delay: .35s; }
+.qb-divider { animation-delay: .5s; }
+.qb-translation { animation-delay: .62s; }
+.qb-attribution { animation-delay: .8s; }
+@keyframes qb-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .qb-art img, .qb-verse, .qb-translit, .qb-divider, .qb-translation, .qb-attribution { animation: none; }
+}
+body.home .qb-attribution { right: max(20px, calc((100% - 1340px) / 2 + 20px)); }
+
+/* Home page: the banner is the hero at the top, so it is a little more compact there */
+body.home .qb-inner { padding-top: 26px; padding-bottom: 46px; min-height: 0; }
+body.home .qb-art img { max-width: 360px; }
+@media (max-width: 860px) { body.home .qb-inner { padding: 22px 18px 50px; } }
