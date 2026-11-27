@@ -22,7 +22,7 @@ const SITE = {
   // To add/remove one, copy/delete a line.
   advisors: [
     { name: "Prof. Hari Shankar Mahato", url: "https://www.iitkgp.ac.in/department/MA/faculty/ma-hsmahato" },
-    { name: "Prof. G. P. Raja Sekhar",   url: "https://www.iitkgp.ac.in/department/MA/faculty/ma-rajas" }
+    { name: "Prof. G P Raja Sekhar",   url: "https://www.iitkgp.ac.in/department/MA/faculty/ma-rajas" }
   ],
   location: "Kharagpur, India",
   email: "sbanerjee.24@kgpian.iitkgp.ac.in",
