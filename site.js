@@ -10,7 +10,7 @@ const SITE = {
   nameBn: "স্বরূপানন্দ ব্যানার্জ্জী",     // shown under your name in the menu bar and footer (Bengali)
   photo: "profile.jpg",        // replace this file to change your photo (keep the same name)
   position: [                             // each line appears on its own line under your name
-    "Research Scholar"
+    "PhD Candidate"
   ],
   affiliation: [                          // shown under the position, linked to affiliationUrl
     "Department of Mathematics",

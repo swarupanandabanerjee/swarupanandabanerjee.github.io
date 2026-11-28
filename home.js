@@ -14,15 +14,31 @@
   const escAttr = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const isExternal = (url) => /^https?:/i.test(url);
 
-  /* ---------------- 1. Photo slider ---------------- */
+  /* ---------------- 1. Photo slider (crossfade) ----------------
+     Photos fade into each other. Each photo is downloaded only when it is
+     about to be shown (the next one is fetched while the current one is on
+     screen), so visitors who leave early don't download every photo.      */
   const slider = document.querySelector("[data-slider]");
   if (slider) {
     const track = slider.querySelector(".slides");
     const dotsBox = slider.querySelector(".slider-dots");
     const prevBtn = slider.querySelector(".slider-prev");
     const nextBtn = slider.querySelector(".slider-next");
-    const DELAY = 5000;            // time each photo stays (milliseconds)
-    let index = 0, timer = null, slides = [];
+    const DELAY = 5000;            // ✏️ time each photo stays (milliseconds)
+    let index = 0, want = 0, timer = null, slides = [];
+
+    const imgOf = (s) => s && s.querySelector("img");
+    const load = (s) => {          // start downloading a slide's photo (once)
+      const img = imgOf(s);
+      if (img && !img.getAttribute("src") && img.dataset.src) img.src = img.dataset.src;
+      return img;
+    };
+    const ready = (img) => (!img || (img.complete && img.naturalWidth > 0)) ? Promise.resolve() :
+      new Promise((res) => {
+        img.addEventListener("load", res, { once: true });
+        img.addEventListener("error", res, { once: true });
+        setTimeout(res, 4000);       // never wait forever
+      });
 
     const build = () => {
       slides = Array.from(track.children);
@@ -30,22 +46,31 @@
         `<button type="button" role="tab" aria-label="Show photo ${i + 1}"></button>`).join("");
       slider.classList.toggle("single", slides.length < 2);
       if (index >= slides.length) index = 0;
-      show(index);
+      paint(index);
+    };
+    const paint = (k) => {
+      slides.forEach((s, j) => { s.classList.toggle("is-active", j === k); s.setAttribute("aria-hidden", String(j !== k)); });
+      Array.from(dotsBox.children).forEach((d, j) => d.setAttribute("aria-selected", String(j === k)));
     };
     const show = (i) => {
       if (!slides.length) return;
-      index = (i + slides.length) % slides.length;
-      track.style.transform = `translateX(${-100 * index}%)`;
-      slides.forEach((s, k) => s.setAttribute("aria-hidden", String(k !== index)));
-      Array.from(dotsBox.children).forEach((d, k) => d.setAttribute("aria-selected", String(k === index)));
+      const k = (i + slides.length) % slides.length;
+      want = k;
+      ready(load(slides[k])).then(() => {
+        if (want !== k || !slides[k]) return;        // the visitor already moved on
+        index = k; paint(k);
+        if (slides.length > 1) load(slides[(k + 1) % slides.length]);   // get the next photo ready
+      });
     };
     const play = () => { stop(); if (!reduceMotion && slides.length > 1) timer = setInterval(() => show(index + 1), DELAY); };
     const stop = () => { if (timer) clearInterval(timer); timer = null; };
 
-    // A photo listed in index.html but not uploaded yet is skipped automatically.
+    // A photo that cannot be loaded is removed from the slider automatically.
+    const watch = (img) => img.addEventListener("error", () => {
+      const fig = img.closest(".slide"); if (fig) { fig.remove(); build(); play(); }
+    });
     track.querySelectorAll("img").forEach((img) => {
-      const drop = () => { const fig = img.closest(".slide"); if (fig) { fig.remove(); build(); play(); } };
-      if (img.complete && img.naturalWidth === 0) drop(); else img.addEventListener("error", drop);
+      if (img.complete && img.getAttribute("src") && img.naturalWidth === 0) { img.closest(".slide").remove(); } else watch(img);
     });
 
     dotsBox.addEventListener("click", (e) => {
@@ -72,27 +97,36 @@
 
     build(); play();
 
-    // Find extra photos automatically: image-2.jpg, image-3.jpg, … (.jpg, .jpeg or .png).
-    // Stops at the first number that isn't uploaded.
+    // Find extra photos automatically: image-2, image-3, … (.webp, .jpg, .jpeg or .png).
+    // Only a tiny "does it exist?" check is made here; the photo itself is
+    // downloaded later, just before it is shown. Stops at the first missing number.
     const prefix = slider.getAttribute("data-auto-photos");
     const maxN = parseInt(slider.getAttribute("data-auto-max"), 10) || 12;
-    const EXTS = ["jpg", "jpeg", "png"];
-    const probe = (n, e) => {
-      if (!prefix || n > maxN || e >= EXTS.length) return;
-      const src = `${prefix}${n}.${EXTS[e]}`;
-      const test = new Image();
-      test.onload = () => {
-        const fig = document.createElement("figure");
-        fig.className = "slide";
-        fig.innerHTML = `<img src="${escAttr(src)}" alt="Photo ${n - 1} of Swarupananda Banerjee">`;
-        track.appendChild(fig);
-        build(); play();
-        probe(n + 1, 0);
-      };
-      test.onerror = () => probe(n, e + 1);
-      test.src = src;
+    const EXTS = ["webp", "jpg", "jpeg", "png"];
+    const exists = (url) => fetch(url, { method: "HEAD" }).then((r) => r.ok).catch(() => null);
+    const viaImage = (url) => new Promise((res) => { const t = new Image(); t.onload = () => res(true); t.onerror = () => res(false); t.src = url; });
+    const add = (src, n) => {
+      const fig = document.createElement("figure");
+      fig.className = "slide";
+      fig.innerHTML = `<img data-src="${escAttr(src)}" alt="Photo ${n - 1} of Swarupananda Banerjee" decoding="async">`;
+      track.appendChild(fig); watch(fig.querySelector("img"));
+      build(); play();
+      if (slides.length === 2) setTimeout(() => load(slides[1]), 1500);   // first extra photo, after the page has settled
     };
-    if (prefix) probe(2, 0);
+    const discover = async () => {
+      for (let n = 2; n <= maxN; n++) {
+        let found = null;
+        for (const ext of EXTS) {
+          const url = `${prefix}${n}.${ext}`;
+          let ok = await exists(url);
+          if (ok === null) ok = await viaImage(url);     // fallback if the quick check is not possible
+          if (ok) { found = url; break; }
+        }
+        if (!found) return;
+        add(found, n);
+      }
+    };
+    if (prefix) (document.readyState === "complete" ? discover() : window.addEventListener("load", discover, { once: true }));
   }
 
   /* ---------------- 2. Shared helpers for news items ---------------- */
