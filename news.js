@@ -27,7 +27,7 @@ const NEWS = [
   {
     date: "Oct 2026",
     type: "preprint",
-    text: `New preprint on arXiv: <em>The Vanishing-Diffusion Limit of an Incompressible Visco-Morphoelastic System: Weak Solutions and a Jaumann Defect</em>.`,
+    text: `New preprint added: <em>The Vanishing-Diffusion Limit of an Incompressible Visco-Morphoelastic System: Weak Solutions and a Jaumann Defect</em>.`,
     link: "publications.html"
   },
   {

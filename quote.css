@@ -128,5 +128,5 @@ body.home .qb-art img { max-width: 360px; }
 }
 
 /* Home: the colour picture is wide (3:2), so give it a wider column */
-body.home .quote-banner.qb-match .qb-inner { grid-template-columns: minmax(260px, 42%) minmax(0, 1fr); }
+@media (min-width: 861px) { body.home .quote-banner.qb-match .qb-inner { grid-template-columns: minmax(260px, 42%) minmax(0, 1fr); } }   /* two columns on wide screens only; phones stack */
 body.home .quote-banner.qb-match .qb-art img { max-width: 540px; margin: -6px auto; }

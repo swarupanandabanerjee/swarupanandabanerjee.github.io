@@ -1292,3 +1292,115 @@ html.search-open { overflow: hidden; }
 .visitor-slot a, .visitor-slot img, .visitor-slot canvas, .visitor-slot iframe { display: block; max-width: 100% !important; height: auto; margin: 0 auto; border-radius: 10px; }
 .visitor-card.has-widget .visitor-head { justify-content: flex-end; }
 .visitor-card.has-widget .visitor-slot { flex: 1 1 auto; align-items: center; }
+
+/* ---------- Home: "At a glance" card under the photo slider ---------- */
+.id-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 16px 15px 14px; position: relative; overflow: hidden;
+}
+.id-card::before {               /* thin gold → blue line on top, like the reading line */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px;
+  background: linear-gradient(90deg, #c9a24a, var(--accent));
+}
+.id-name { margin: 0; text-align: center; font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.08rem; line-height: 1.25; color: var(--text); }
+.id-role { margin: 2px 0 10px; text-align: center; font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #a57a24; }
+:root[data-theme="dark"] .id-role { color: #d9b36a; }
+.id-facts { list-style: none; margin: 0 0 12px; padding: 10px 0 0; border-top: 1px dashed var(--border); display: grid; gap: 7px; }
+.id-facts li { display: flex; gap: 8px; align-items: flex-start; font-size: .76rem; line-height: 1.4; color: var(--muted); }
+.id-facts svg { width: 15px; height: 15px; flex: none; margin-top: 1px; color: var(--accent); }
+.id-facts a { color: var(--text); }
+.id-links { display: flex; gap: 8px; justify-content: space-between; }
+.id-links a {
+  width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  background: var(--brand); color: #fff; border: 0; transition: transform .15s, box-shadow .15s;
+}
+.id-links a:hover, .id-links a:focus-visible { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, .18); text-decoration: none; }
+.id-links svg { width: 19px; height: 19px; }
+.id-links svg path[fill="currentColor"] { fill: currentColor; }
+.id-links .scholar  { --brand: #4285f4; }
+.id-links .orcid    { --brand: #a6ce39; }
+.id-links .rg       { --brand: #00ccbb; }
+.id-links .linkedin { --brand: #0a66c2; }
+.id-links .linkedin svg { width: 16px; height: 16px; }
+.id-links .mail     { --brand: var(--accent); color: var(--accent-text); }
+/* Laptops: photo and News already share the left column, so the card is not needed there */
+@media (max-width: 1199px) and (min-width: 981px) { .id-card { display: none; } }
+.collab-text { text-wrap: pretty; }
+
+/* ---------- Sidebar (inner pages): email on two tidy lines (name[at] | domain) ---------- */
+.mail-2l { display: inline-flex; flex-direction: column; }
+.mail-2l > span { white-space: nowrap; }
+.sidebar-meta { font-size: .86rem; }
+
+/* ---------- Hover "bridge" (fixes the flicker) ----------
+   Items that lift up on hover used to flicker when the mouse rested on their
+   bottom edge: the item moved up, the mouse was no longer on it, it dropped
+   back, and so on. An invisible strip under a lifted item keeps the mouse "on" it. */
+.card.done, .m-card.done, .hc-col, .id-links a, .f-top, .tag, .pill { position: relative; }
+.ri:hover::before, .card.done:hover::before, .m-card.done:hover::before, .hc-col:hover::before,
+.connect-link:hover::before, .profile-links a:hover::before, .id-links a:hover::before,
+a.f-social:hover::before, .f-top:hover::before, .tag:hover::before, .pill:hover::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 8px;
+}
+
+/* =====================================================================
+   SIDEBAR — STYLE 2 (profile card with a navy cover band)
+   ===================================================================== */
+.sidebar.sb-v2 { padding: 0 20px 20px; overflow: hidden; }
+.sb-v2 .sb-cover {               /* light theme: slate blue with a faint graph-paper grid */
+  height: 92px; margin: 0 -20px; position: relative;
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .10) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .10) 0 1px, transparent 1px 16px),
+    radial-gradient(120% 140% at 85% 0%, rgba(226, 196, 126, .30), transparent 55%),
+    linear-gradient(135deg, #7f9cc4 0%, #5f7fad 100%);
+}
+:root[data-theme="dark"] .sb-v2 .sb-cover {   /* dark theme: navy, same faint grid */
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 16px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .05) 0 1px, transparent 1px 16px),
+    radial-gradient(120% 140% at 85% 0%, rgba(201, 162, 74, .30), transparent 55%),
+    linear-gradient(135deg, #1d4f91 0%, #12345f 60%, #0d2647 100%);
+}
+.sb-v2 .sb-cover::after {        /* thin gold hairline under the band */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #c9a24a 30%, #e2c47e 50%, #c9a24a 70%, transparent);
+}
+.sb-v2 .avatar {
+  position: relative; width: 120px; height: 120px; margin: -60px auto 12px;
+  border: 4px solid var(--surface); box-shadow: 0 6px 18px rgba(16, 24, 40, .18);
+}
+.sb-v2 .name { margin-bottom: 2px; }
+.sb-v2 .sb-role {
+  margin: 0 0 4px; font-size: .74rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #a57a24;
+}
+:root[data-theme="dark"] .sb-v2 .sb-role { color: #d9b36a; }
+.sb-v2 .affil { display: block; color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.sb-v2 .affil:hover { color: var(--accent); text-decoration: none; }
+.sb-v2 .profile-links { border-top: 0; padding-top: 0; margin: 14px 0 4px; gap: 8px; }
+.sb-v2 .profile-links a { width: 38px; height: 38px; border-radius: 50%; }
+.sb-v2 .profile-links svg { width: 20px; height: 20px; }
+.sb-v2 .sb-sec { margin-top: 16px; text-align: left; }
+.sb-v2 .sb-h {
+  display: flex; align-items: center; gap: 10px; margin: 0 0 8px;
+  font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+}
+.sb-v2 .sb-h::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.sb-v2 .sb-adv { list-style: none; margin: 0; padding: 0 0 0 12px; border-left: 2px solid #c9a24a; font-size: .88rem; line-height: 1.5; }
+.sb-v2 .sb-adv a { color: var(--text); font-weight: 500; }
+.sb-v2 .sb-adv a:hover { color: var(--accent); }
+.sb-v2 .sidebar-meta { margin: 0; }
+.sb-v2 .cv-btn {
+  margin-top: 18px; width: 100%; justify-content: center;
+  background: var(--accent); color: var(--accent-text); border: 1px solid var(--accent);
+}
+.sb-v2 .cv-btn:hover { filter: brightness(1.08); text-decoration: none; }
+/* phones/tablets: the compact top bar version stays as before (no cover band) */
+@media (max-width: 980px) {
+  .sb-v2 .sb-cover, .sb-v2 .sb-sec { display: none; }
+  .sidebar.sb-v2 { padding: 14px 18px; }
+  .sb-v2 .avatar { margin: 0; border-width: 3px; box-shadow: 0 0 0 1px var(--border); }
+  .sb-v2 .sb-role { margin: 1px 0 2px; font-size: .68rem; }
+  .sb-v2 .affil { font-size: .82rem; }
+  .sb-v2 .cv-btn { margin-top: 10px; }
+}

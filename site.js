@@ -81,6 +81,13 @@ const SITE = {
 
   // Email shown in readable pieces that only break before [at] / [dot] (never inside a word):
   // sbanerjee[dot]24 | [at]kgpian | [dot]iitkgp | [dot]ac[dot]in
+  // Sidebar: the address on two tidy lines, broken after [at]:  name[at] | domain
+  const mailTwoLines = (addr) => {
+    const i = String(addr).search(/\[at\]/i);
+    if (i < 0) return mailHTML(addr);
+    const user = String(addr).slice(0, i + 4), domain = String(addr).slice(i + 4);
+    return `<span class="mail-2l"><span>${esc(user)}</span><span>${esc(domain)}</span></span>`;
+  };
   const mailHTML = (addr) => {
     const parts = String(addr).split(/(?=\[at\]|\[dot\])/i);
     const word = (p) => (p || "").replace(/\[(dot|at)\]/gi, "").length;
@@ -200,19 +207,24 @@ const SITE = {
       `<li><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.name)}</a></li>`).join("");
     const onCvPage = current === (SITE.cvPage || "cv.html").toLowerCase();
     sidebar.className = current === "index.html" ? "sidebar" : "sidebar compact";
+    sidebar.classList.add("sb-v2");
     sidebar.innerHTML = `
+      <div class="sb-cover" aria-hidden="true"></div>
       <img class="avatar" src="${esc(SITE.photo)}" alt="Photo of ${esc(SITE.name)}" width="150" height="150">
       <div class="sidebar-id">
         <p class="name">${esc(SITE.name)}</p>
-        <p class="position">${SITE.position.map(esc).join("<br>")}${affiliation ? `<br><a class="affil" href="${esc(SITE.affiliationUrl)}" target="_blank" rel="noopener">${affiliation}</a>` : ""}</p>
+        <p class="sb-role">${SITE.position.map(esc).join("<br>")}</p>
+        ${affiliation ? `<a class="affil" href="${esc(SITE.affiliationUrl)}" target="_blank" rel="noopener">${affiliation}</a>` : ""}
       </div>
-      ${advisors ? `<div class="sidebar-advisors"><p class="sa-label">${ICONS.cap}${SITE.advisors.length > 1 ? "Advisors" : "Advisor"}</p><ul>${advisors}</ul></div>` : ""}
-      <ul class="sidebar-meta">
-        <li>${ICONS.pin}<span>${esc(SITE.location)}</span></li>
-        <li class="sm-email">${ICONS.email}<a href="#" data-mail="${esc(SITE.email)}" aria-label="Email">${mailHTML(SITE.email)}</a></li>
-      </ul>
       <div class="profile-links">${links}</div>
-      ${onCvPage ? "" : `<a class="btn outline cv-btn" href="${esc(SITE.cvPage || "cv.html")}">${ICONS.cv}View CV</a>`}`;
+      ${advisors ? `<div class="sb-sec"><p class="sb-h">${SITE.advisors.length > 1 ? "Advisors" : "Advisor"}</p><ul class="sb-adv">${advisors}</ul></div>` : ""}
+      <div class="sb-sec"><p class="sb-h">Contact</p>
+        <ul class="sidebar-meta">
+          <li>${ICONS.pin}<span>${esc(SITE.location)}</span></li>
+          <li class="sm-email">${ICONS.email}<a href="#" data-mail="${esc(SITE.email)}" aria-label="Email">${mailTwoLines(SITE.email)}</a></li>
+        </ul>
+      </div>
+      ${onCvPage ? "" : `<a class="btn cv-btn" href="${esc(SITE.cvPage || "cv.html")}">${ICONS.cv}View CV</a>`}`;
   }
 
   /* ---------- Footer ---------- */
